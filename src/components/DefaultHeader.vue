@@ -3,14 +3,23 @@
     color="indigo darken-1"
     app
   >
-    <v-app-bar-nav-icon>
+    <span class="mx-auto">
+      <v-app-bar-nav-icon>
+        <v-icon>
+          mdi-voice
+        </v-icon>
+      </v-app-bar-nav-icon>
+      <span>
+        {{ headTitle }}
+      </span>
+    </span>
+    <v-btn
+      icon
+    >
       <v-icon>
-        mdi-voice
+        mdi-login-variant
       </v-icon>
-    </v-app-bar-nav-icon>
-    <div>
-      {{ headTitle }}
-    </div>
+    </v-btn>
   </v-app-bar>
 </template>
 
