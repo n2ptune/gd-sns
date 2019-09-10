@@ -14,7 +14,5 @@ const firebaseConfig = {
 
 // 객체 덮어쓰지 않기
 !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : ''
-export const GoogleProvider = new firebase.auth.GoogleAuthProvider()
 export const auth = firebase.auth()
-export const db = firebase.firestore()
 export default firebase

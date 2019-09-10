@@ -36,14 +36,18 @@
 </template>
 
 <script>
-// import firebase from '~/plugins/firebase.js'
-import firebase from '~/plugins/firebase.js'
+import firebase, { auth } from '~/plugins/firebase.js'
 
 export default {
   data () {
     return {
       headTitle: 'GD-SNS',
     }
+  },
+  mounted () {
+    auth.getRedirectResult().then(result => {
+      this.$store.commit('login', result.user)
+    })
   },
   methods: {
     googleSignIn () {
