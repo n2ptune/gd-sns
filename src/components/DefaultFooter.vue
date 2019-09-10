@@ -1,8 +1,11 @@
 <template>
   <v-footer
     app
+    dark
   >
-    gd-sns @n2ptune
+    <div class="ml-auto subtitle grey--text">
+      gd-sns @n2ptune 2019
+    </div>
   </v-footer>
 </template>
 
