@@ -15,20 +15,44 @@
       </span>
     </span>
     <v-btn
+      @click="googleSignIn"
+      v-if="$store.state.user === null ? true : false"
       icon
     >
       <v-icon>
         mdi-login-variant
       </v-icon>
     </v-btn>
+    <v-btn
+      @click="googleSignOut"
+      v-if="$store.state.user === null ? false : true"
+      icon
+    >
+      <v-icon>
+        mdi-logout-variant
+      </v-icon>
+    </v-btn>
   </v-app-bar>
 </template>
 
 <script>
+// import firebase from '~/plugins/firebase.js'
+import firebase from '~/plugins/firebase.js'
+
 export default {
   data () {
     return {
-      headTitle: 'GD-SNS'
+      headTitle: 'GD-SNS',
+    }
+  },
+  methods: {
+    googleSignIn () {
+      this.$store.dispatch('login')
+    },
+    googleSignOut () {
+      firebase.auth().signOut().then(result => {
+        this.$store.commit('logout')
+      })
     }
   }
 }
