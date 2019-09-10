@@ -1,6 +1,6 @@
 <template>
   <v-app-bar
-    color="indigo darken-1"
+    color="success darken-3"
     app
   >
     <span class="mx-auto">
@@ -9,7 +9,7 @@
           mdi-voice
         </v-icon>
       </v-app-bar-nav-icon>
-      <span>
+      <span class="title">
         {{ headTitle }}
       </span>
     </span>
