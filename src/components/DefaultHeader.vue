@@ -15,7 +15,7 @@
       </span>
     </span>
     <v-btn
-      @click="googleSignIn"
+      @click="signIn"
       v-if="$store.state.user === null ? true : false"
       icon
     >
@@ -24,7 +24,7 @@
       </v-icon>
     </v-btn>
     <v-btn
-      @click="googleSignOut"
+      @click="signOut"
       v-if="$store.state.user === null ? false : true"
       icon
     >
@@ -45,18 +45,11 @@ export default {
     }
   },
   mounted () {
-    auth.getRedirectResult().then(result => {
-      this.$store.commit('login', result.user)
-    })
   },
   methods: {
-    googleSignIn () {
-      this.$store.dispatch('login')
+    signIn () {
     },
-    googleSignOut () {
-      firebase.auth().signOut().then(result => {
-        this.$store.commit('logout')
-      })
+    signOut () {
     }
   }
 }
