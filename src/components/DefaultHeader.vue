@@ -4,34 +4,41 @@
     dark
     app
   >
-    <span class="mx-auto">
-      <v-app-bar-nav-icon>
+    <span class="app-bar-header">
+      <v-btn
+        to="/"
+        icon
+      >
         <v-icon>
-          mdi-voice
+          mdi-home-account
         </v-icon>
-      </v-app-bar-nav-icon>
-      <span class="title font-weight-regular">
+      </v-btn>
+      <span class="title font-weight-regular py-auto">
         {{ headTitle }}
       </span>
     </span>
-    <v-btn
-      @click="signIn"
-      v-if="$store.state.user === null ? true : false"
-      icon
-    >
-      <v-icon>
-        mdi-login-variant
-      </v-icon>
-    </v-btn>
-    <v-btn
-      @click="signOut"
-      v-if="$store.state.user === null ? false : true"
-      icon
-    >
-      <v-icon>
-        mdi-logout-variant
-      </v-icon>
-    </v-btn>
+    <span class="ml-auto">
+      <v-btn
+        :loading="$store.state.btnLoading"
+        @click="signIn"
+        v-if="$store.state.user === null ? true : false"
+        icon
+      >
+        <v-icon>
+          mdi-login-variant
+        </v-icon>
+      </v-btn>
+      <v-btn
+        :loading="$store.state.btnLoading"
+        @click="signOut"
+        v-if="$store.state.user === null ? false : true"
+        icon
+      >
+        <v-icon>
+          mdi-logout-variant
+        </v-icon>
+      </v-btn>
+    </span>
   </v-app-bar>
 </template>
 
@@ -49,9 +56,11 @@ export default {
   methods: {
     signIn () {
       this.$store.dispatch('login')
+      this.$store.commit('setLoading')
     },
     signOut () {
       this.$store.dispatch('logout')
+      this.$store.commit('setLoading')
     }
   }
 }
