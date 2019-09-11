@@ -48,8 +48,10 @@ export default {
   },
   methods: {
     signIn () {
+      this.$store.dispatch('login')
     },
     signOut () {
+      this.$store.dispatch('logout')
     }
   }
 }
