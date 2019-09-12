@@ -44,6 +44,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    ['@nuxtjs/proxy', { proxy: { '/api': 'http://baram.nexon.com/ ' }}]
   ],
   /*
   ** Axios module configuration

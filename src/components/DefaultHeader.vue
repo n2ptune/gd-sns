@@ -29,22 +29,22 @@
         </v-icon>
       </v-btn>
       <v-btn
-        :loading="$store.state.btnLoading"
-        @click="signOut"
-        v-if="$store.state.user === null ? false : true"
+        fab
         icon
+        v-if="$store.state.user === null ? false : true"
+        to="/profile"
       >
-        <v-icon>
-          mdi-logout-variant
-        </v-icon>
+        <v-avatar
+          size="36"
+        >
+          <img :src="$store.state.user.photoURL" :alt="$store.state.user.displayName">
+        </v-avatar>
       </v-btn>
     </span>
   </v-app-bar>
 </template>
 
 <script>
-import firebase, { auth } from '~/plugins/firebase.js'
-
 export default {
   data () {
     return {
