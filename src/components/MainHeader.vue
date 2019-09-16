@@ -10,12 +10,15 @@
     >
       <v-app-bar-nav-icon class="ml-auto">
         <v-icon
-          large
+          :large="_sizingIcon"
         >
           mdi-vuejs
         </v-icon>
       </v-app-bar-nav-icon>
-      <div class="d-inline headline font-weight-thin">
+      <div
+        class="d-inline font-weight-thin"
+        :class="_typho"
+      >
         Gangdong Univ. SNS
       </div>
       <v-spacer></v-spacer>
@@ -29,7 +32,7 @@
     </v-app-bar>
     <v-img
       src="https://picsum.photos/2560/1440?random"
-      height="700"
+      height="600"
       aspect-ratio="1"
     ></v-img>
   </div>
@@ -52,6 +55,20 @@ export default {
     signOut () {
       this.$store.dispatch('logout')
       this.$store.commit('setLoading')
+    },
+  },
+  computed: {
+    _typho () {
+      return this.$vuetify.breakpoint.name === 'xs' ||
+        this.$vuetify.breakpoint.name === 'sm'
+        ? 'title'
+        : 'headline'
+    },
+    _sizingIcon () {
+      return this.$vuetify.breakpoint.name === 'xs' ||
+        this.$vuetify.breakpoint.name === 'sm'
+        ? false
+        : true
     }
   }
 }
