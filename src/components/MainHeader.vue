@@ -57,14 +57,14 @@ export default {
       this.$store.dispatch('logout')
       this.$store.commit('setLoading')
     },
-  },
-  computed: {
     _typho () {
       return this.$vuetify.breakpoint.name === 'xs' ||
         this.$vuetify.breakpoint.name === 'sm'
         ? 'title'
         : 'headline'
-    },
+    }
+  },
+  computed: {
     _sizingIcon () {
       return this.$vuetify.breakpoint.name === 'xs' ||
         this.$vuetify.breakpoint.name === 'sm'
