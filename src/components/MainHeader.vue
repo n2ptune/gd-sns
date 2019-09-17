@@ -28,6 +28,7 @@
         depressed
         dark
         right
+        to="/login"
       >login</v-btn>
     </v-app-bar>
     <v-img

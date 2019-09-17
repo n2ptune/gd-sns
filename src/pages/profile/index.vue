@@ -16,7 +16,7 @@
                     <v-icon>mdi-clipboard-account-outline</v-icon>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>이경환</v-list-item-title>
+                    <v-list-item-title>{{ $store.state.user.displayName }}</v-list-item-title>
                     <v-list-item-subtitle>이름</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>

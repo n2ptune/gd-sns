@@ -14,6 +14,7 @@ export const mutations = {
     state.user = {}
     // 모든 정보를 복사하면 maximum call stack size exceeded 오류 발생
     Object.assign(state.user, getUser.providerData[0])
+    state.btnLoading = false
   },
   setLoading (state) {
     state.btnLoading = !state.btnLoading
@@ -22,16 +23,16 @@ export const mutations = {
 
 export const actions = {
   login ({ commit }) {
+    commit('setLoading')
     firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(result => {
       commit('setUser', result.user)
-      commit('setLoading')
     }).catch(e => {
       console.log(e.message)
     })
   },
   logout ({ commit }) {
-    commit('setUser', null)
     commit('setLoading')
+    commit('setUser', null)
     firebase.auth().signOut()
   }
 }

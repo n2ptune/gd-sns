@@ -16,8 +16,3 @@ const firebaseConfig = {
 !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : ''
 export const auth = firebase.auth()
 export default firebase
-
-// 리다이렉트 핸들러
-// firebase.auth().getRedirectResult().then(result => {
-//   // console.log(result)
-// })
