@@ -2,7 +2,7 @@
   <v-content style="background-color: #eee;">
     <v-container class="my-5">
       <v-layout row wrap justify-center>
-        <v-flex xs8>
+        <v-flex xs11 sm8>
           <v-card>
             <v-card-title>
               <div class="mx-auto headline">

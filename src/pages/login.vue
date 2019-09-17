@@ -3,12 +3,12 @@
     <v-container>
       <v-layout row wrap justify-center>
         <v-flex xs7>
-          <div class="title text-center">
+          <div class="headline text-center">
             Login
           </div>
           <v-divider class="my-5" />
         </v-flex>
-        <v-flex xs6>
+        <v-flex xs10 sm8 md6>
           <v-card>
             <v-card-title class="d-block text-center">
               <v-icon
@@ -46,6 +46,31 @@
               </v-btn>
             </v-card-actions>
           </v-card>
+        </v-flex>
+        <v-flex xs12></v-flex>
+        <v-flex xs12 sm8 md6 class="my-5">
+          <v-btn
+            block
+            color="white"
+            large
+            href="https://accounts.google.com/SignUp"
+            target="_blank"
+          >
+            Sign Up With Google
+            <v-icon class="ml-2">
+              mdi-google
+            </v-icon>
+          </v-btn>
+          <div
+            class="subtitle-1 text-center grey--text font-weight-thin my-2"
+          >
+            <v-icon
+              class="mb-1"
+            >
+              mdi-arrow-up
+            </v-icon>
+            구글에서 회원가입
+          </div>
         </v-flex>
       </v-layout>
     </v-container>
