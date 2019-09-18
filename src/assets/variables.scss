@@ -2,6 +2,7 @@
 //
 // The variables you want to modify
 // $font-size-root: 20px;
-$body-font-family: 'Nanum Gothic', sans-serif;
+$body-font-family: 'Roboto', 'Nanum Gothic', sans-serif !important;
+$heading-font-family: 'Roboto', 'Nanum Gothic', sans-serif !important;
 
 @import '~vuetify/src/styles/styles.sass';

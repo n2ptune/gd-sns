@@ -5,13 +5,11 @@
         <v-flex xs11 sm8>
           <v-card>
             <v-card-title>
-              <div class="mx-auto headline">
-                {{ $store.state.user.displayName }}님의 프로필
-              </div>
+              <div class="mx-auto headline">{{ $store.state.user.displayName }}님의 프로필</div>
             </v-card-title>
             <v-card-text>
               <v-list>
-                <v-list-item @click="">
+                <v-list-item @click>
                   <v-list-item-icon>
                     <v-icon>mdi-clipboard-account-outline</v-icon>
                   </v-list-item-icon>
@@ -30,7 +28,7 @@
 </template>
 
 <script>
-export default {
-  middleware: 'auth'
-}
+	export default {
+		middleware: 'auth'
+	}
 </script>

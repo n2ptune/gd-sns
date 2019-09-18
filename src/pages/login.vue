@@ -3,32 +3,25 @@
     <v-container>
       <v-layout row wrap justify-center>
         <v-flex xs7>
-          <div class="headline text-center">
-            Login
-          </div>
+          <div class="headline text-center">Login</div>
           <v-divider class="my-5" />
         </v-flex>
         <v-flex xs10 sm8 md6>
           <v-card>
             <v-card-title class="d-block text-center">
-              <v-icon
-                x-large
-                color="primary"
-              >
-                mdi-google-plus
-              </v-icon>
+              <v-icon x-large color="primary">mdi-google-plus</v-icon>
             </v-card-title>
             <v-card-text>
-              <div class="title black--text">
-                구글 로그인
-              </div>
+              <div class="title black--text">구글 로그인</div>
               <div class="subtitle-1">
-                로그인 방식으로 구글 로그인을 채택하고 있습니다. 아이디가 없다면 <a href="https://accounts.google.com/signup/v2/webcreateaccount?flowName=GlifWebSignIn&flowEntry=SignUp" target="_blank">여기</a>를 눌러서 회원가입을 먼저 한 뒤, 아이디가 있으시다면 아래 버튼을 눌러
+                로그인 방식으로 구글 로그인을 채택하고 있습니다. 아이디가 없다면
+                <a
+                  href="https://accounts.google.com/signup/v2/webcreateaccount?flowName=GlifWebSignIn&flowEntry=SignUp"
+                  target="_blank"
+                >여기</a>를 눌러서 회원가입을 먼저 한 뒤, 아이디가 있으시다면 아래 버튼을 눌러
                 로그인을 하세요.
               </div>
-              <div class="subtitle-1">
-                로그인 버튼이 보이지 않으시다면 로그인이 이미 된 상태일 수 있습니다.
-              </div>
+              <div class="subtitle-1">로그인 버튼이 보이지 않으시다면 로그인이 이미 된 상태일 수 있습니다.</div>
             </v-card-text>
             <v-card-actions>
               <v-btn
@@ -41,14 +34,12 @@
                 dark
                 color="amber darken-4"
                 class="ml-auto"
-              >
-                login
-              </v-btn>
+              >login</v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
         <v-flex xs12></v-flex>
-        <v-flex xs12 sm8 md6 class="my-5">
+        <v-flex xs10 sm8 md6 class="my-5">
           <v-btn
             block
             color="white"
@@ -57,19 +48,10 @@
             target="_blank"
           >
             Sign Up With Google
-            <v-icon class="ml-2">
-              mdi-google
-            </v-icon>
+            <v-icon class="ml-2">mdi-google</v-icon>
           </v-btn>
-          <div
-            class="subtitle-1 text-center grey--text font-weight-thin my-2"
-          >
-            <v-icon
-              class="mb-1"
-            >
-              mdi-arrow-up
-            </v-icon>
-            구글에서 회원가입
+          <div class="subtitle-1 text-center grey--text font-weight-thin my-2">
+            <v-icon class="mb-1">mdi-arrow-up</v-icon>구글에서 회원가입
           </div>
         </v-flex>
       </v-layout>
