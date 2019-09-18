@@ -14,7 +14,8 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      
     ]
   },
   /*
@@ -53,22 +54,19 @@ export default {
   */
   axios: {
   },
-  // Web Font Loader
-  webfontloader: {
-    google: {
-      families: ['Gothic+A1']
-    }
-  },
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module
   */
+ webfontloader: {
+   google: {
+     families: ['Nanum+Gothic:400,500,700,900']
+   }
+ },
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     defaultAssets: {
-      font: {
-        family: 'Gothic A1'
-      }
+      font: false
     },
     theme: {
       dark: false,

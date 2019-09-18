@@ -23,7 +23,7 @@
     "nuxt-webfontloader": "^1.1.0"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.0.0",
+    "@nuxtjs/vuetify": "^1.8.5",
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-prettier": "^3.0.1",
     "node-sass": "^4.0.0",
