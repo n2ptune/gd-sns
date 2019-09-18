@@ -25,6 +25,7 @@ export default {
   ** Global CSS
   */
   css: [
+    '~/assets/variables.scss'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -44,7 +45,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    ['@nuxtjs/proxy', { proxy: { '/api': 'http://baram.nexon.com/ ' }}]
+    'nuxt-webfontloader'
   ],
   /*
   ** Axios module configuration
@@ -52,12 +53,23 @@ export default {
   */
   axios: {
   },
+  // Web Font Loader
+  webfontloader: {
+    google: {
+      families: ['Gothic+A1']
+    }
+  },
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module
   */
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
+    defaultAssets: {
+      font: {
+        family: 'Gothic A1'
+      }
+    },
     theme: {
       dark: false,
       themes: {
