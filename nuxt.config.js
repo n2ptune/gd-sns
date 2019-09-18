@@ -80,6 +80,16 @@ export default {
     /*
     ** You can extend webpack config here
     */
+    loaders: [
+      {
+        test: /\.(png|jpe?g|gif|svg)$/,
+        loader: 'url-loader',
+        query: {
+          limit: 1000, // 1초
+          name: 'img/[name].[hash:7].[ext]'
+        }
+      },
+    ],
     extend (config, ctx) {
     }
   },

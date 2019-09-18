@@ -4,6 +4,11 @@
   "description": "SNS with firebase, nuxt.js",
   "author": "n2ptune",
   "private": true,
+  "config": {
+    "nuxt": {
+      "port": "5555"
+    }
+  },
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",

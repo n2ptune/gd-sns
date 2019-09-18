@@ -1,8 +1,6 @@
 <template>
   <v-app>
-    <MainHeader></MainHeader>
     <nuxt />
-    <DefaultFooter></DefaultFooter>
   </v-app>
 </template>
 
