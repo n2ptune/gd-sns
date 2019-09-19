@@ -26,7 +26,7 @@
             <v-card-actions>
               <v-btn
                 v-if="$store.state.user === null"
-                @click="$store.dispatch('login')"
+                @click="login()"
                 :loading="$store.state.btnLoading"
                 depressed
                 outlined
@@ -58,3 +58,13 @@
     </v-container>
   </v-content>
 </template>
+
+<script>
+	export default {
+    methods: {
+      async login () {
+        await this.$store.dispatch('login')
+      }
+    }
+  }
+</script>

@@ -1,5 +1,3 @@
-'use strict'
-
 import firebase from '~/plugins/firebase.js'
 
 export const state = () => ({
@@ -29,6 +27,7 @@ export const actions = {
       .signInWithPopup(new firebase.auth.GoogleAuthProvider())
       .then(result => {
         commit('setUser', result.user)
+        $nuxt.$router.push('/')
       })
       .catch(e => {
         console.log(e.message)

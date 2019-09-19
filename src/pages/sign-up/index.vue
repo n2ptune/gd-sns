@@ -1,6 +1,6 @@
 <template>
   <v-content>
-    <v-container>
+    <!-- <v-container>
       <v-layout row wrap justify-center>
         <v-flex xs6>
           <div class="display-1 mt-5" style="margin-bottom: 2rem;">회원가입</div>
@@ -29,7 +29,7 @@
           </v-form>
         </v-flex>
       </v-layout>
-    </v-container>
+    </v-container> -->
   </v-content>
 </template>
 
@@ -53,7 +53,10 @@
 					}
 				}
 			}
-		},
+    },
+    created () {
+      this.$router.push('/')
+    },
 		methods: {
 			signUp() {
 				if (this.$refs.signUpForm.validate()) {

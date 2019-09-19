@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar color="success darken-1" dark app>
+  <v-app-bar color="success darken-1" dark app dense>
     <span class="app-bar-header">
       <v-btn to="/" icon>
         <v-icon>mdi-home-account</v-icon>
@@ -15,7 +15,7 @@
       >
         <v-icon>mdi-login-variant</v-icon>
       </v-btn>
-      <v-btn fab icon v-if="$store.state.user === null ? false : true" to="/profile">
+      <v-btn fab icon v-if="$store.state.user === null ? false : true" to="/profile" small>
         <v-avatar size="36">
           <img :src="$store.state.user.photoURL" :alt="$store.state.user.displayName" />
         </v-avatar>
