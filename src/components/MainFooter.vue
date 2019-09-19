@@ -3,15 +3,22 @@
     app
     dark
     class="main-footer"
+    padless
   >
-    <div class="d-block ml-auto caption mr-0">
-      (C) 2019. 뷰들뷰들
-    </div>
+    <v-container fluid>
+      <v-layout justify-center row wrap>
+        <v-flex xs12>
+          <div class="text-center caption">
+            (C) 2019. 뷰들뷰들
+          </div>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </v-footer>
 </template>
 
 <style scoped>
   .main-footer {
-    background-color: rgba(0, 0, 0, 0.55);
+    background-color: rgba(255, 255, 255, 0.05);
   }
 </style>
