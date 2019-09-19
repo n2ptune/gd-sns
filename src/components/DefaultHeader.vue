@@ -35,11 +35,9 @@
 		methods: {
 			signIn() {
 				this.$store.dispatch('login')
-				this.$store.commit('setLoading')
 			},
 			signOut() {
 				this.$store.dispatch('logout')
-				this.$store.commit('setLoading')
 			}
 		}
 	}

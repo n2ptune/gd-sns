@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <main-header></main-header>
     <nuxt />
     <main-footer></main-footer>
   </v-app>

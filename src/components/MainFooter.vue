@@ -4,8 +4,8 @@
     dark
     class="main-footer"
   >
-    <div class="d-block ml-auto caption">
-      Copyright 2019. 뷰들뷰들. All Rights Reserved.
+    <div class="d-block ml-auto caption mr-0">
+      (C) 2019. 뷰들뷰들
     </div>
   </v-footer>
 </template>

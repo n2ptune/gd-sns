@@ -105,9 +105,5 @@ export default {
   srcDir: 'src/',
   generate: {
     dir: 'dist/'
-  },
-  // Need to require('dotenv').config()
-  // env: {
-  //   headTitle: process.env.APP_NAME
-  // }
+  }
 }

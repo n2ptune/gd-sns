@@ -3,17 +3,21 @@
     :style="`background-image: url(${require('~/assets/test-image.jpg')})`"
     class="background"
   >
-    <v-container fluid>
-      <span class="mx-auto text-center d-block t-container">
+    <v-container fluid class="mb-heavy">
+      <span class="mx-auto text-center d-block t-container av-fadedown">
+        <div class="mb-3">
+          <v-avatar size="128">
+            <img src="~/assets/gangdong.png" alt="">
+          </v-avatar>
+        </div>
         <div class="mb-4">
-          <v-icon class="mb-2 g-icon" large dark>mdi-penguin</v-icon>
           <span class="text-center white--text title font-weight-d-light text--shadow">강동대학교 소셜 네트워크</span>
         </div>
         <div
           class="title white--text font-weight-bold text--shadow"
         >강동대학교 학생들을 위한 Social Network Service</div>
         <v-btn
-          class="mt-5 font-weight-bold"
+          class="mt-5 font-weight-bold title"
           width="24rem"
           color="amber lighten-1"
           to="/login"
@@ -66,5 +70,34 @@
 	}
 	.g-btn {
 		margin-top: 4rem;
-	}
+  }
+  @-webkit-keyframes fadeDown {
+    from {
+      opacity: 0;
+      -webkit-transform: translate3d(0, -100%, 0);
+      transform: translate3d(0, -100%, 0);
+    }
+    to {
+      opacity: 1;
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  @keyframes fadeDown {
+    from {
+      opacity: 0;
+      -webkit-transform: translate3d(0, -100%, 0);
+      transform: translate3d(0, -100%, 0);
+    }
+    to {
+      opacity: 1;
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  .av-fadedown {
+    -webkit-animation-name: fadeDown;
+    animation-name: fadeDown;
+    animation-duration: 2.5s;
+  }
 </style>
