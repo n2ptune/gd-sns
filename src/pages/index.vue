@@ -5,7 +5,7 @@
   >
     <v-container fluid class="mb-heavy">
       <span class="mx-auto text-center d-block t-container av-fadedown">
-        <div class="mb-3">
+        <div class="mb-3 avatar-container mx-auto elevation-15">
           <v-avatar size="128">
             <img src="~/assets/gangdong.png" alt="">
           </v-avatar>
@@ -30,15 +30,6 @@
 <script>
 	export default {
 		layout: 'main'
-		// computed: {
-		//   responsiveName () {
-		//     return this.$vuetify.breakpoint.name === 'xs'
-		//       ? 'SNS'
-		//       : this.$vuetify.breakpoint.name === 'sm'
-		//       ? 'SNS'
-		//       : 'Social Network Service'
-		//   }
-		// }
 	}
 </script>
 
@@ -99,5 +90,12 @@
     -webkit-animation-name: fadeDown;
     animation-name: fadeDown;
     animation-duration: 2.5s;
+  }
+  .avatar-container {
+    display: table;
+    border: 3px solid white;
+    border-radius: 50%;
+    padding: 0.7rem;
+    width: auto
   }
 </style>
