@@ -67,7 +67,8 @@
 					dateStyle: 'full',
 					timeStyle: 'short',
 					hour12: false
-				}
+        }
+        // @NEED_RESOLVE Can't show and overflow text at iphone
 				return new Date(
 					new this.$firebase.firestore.Timestamp(
 						stamp.seconds,
