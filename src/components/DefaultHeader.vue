@@ -8,6 +8,13 @@
     </span>
     <span class="ml-auto">
       <v-btn
+        v-if="$store.state.user === null ? false : true"
+        icon
+        to="/draw"
+      >
+        <v-icon>mdi-post-outline</v-icon>
+      </v-btn>
+      <v-btn
         :loading="$store.state.btnLoading"
         @click="signIn"
         v-if="$store.state.user === null ? true : false"

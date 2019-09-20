@@ -1,17 +1,17 @@
 <template>
-  <v-content>
+  <v-content style="background-color: #eee;">
     <v-container>
       <!-- Article Template -->
-      <v-row v-for="i in 15" :key="i" justify="center">
+      <v-row v-for="article in $store.state.articles" :key="article.aid" justify="center">
         <v-col cols="12" sm="8" md="6">
           <v-card class="article--container">
             <v-card-title>
               <v-avatar size="28" class="mr-2">
-                <img :src="$store.state.user.photoURL" :alt="$store.state.user.displayName" />
+                <img :src="article.photoURL" :alt="article.name" />
               </v-avatar>
               <div class="author--text">
-                {{ $store.state.user.displayName }}님의 게시글
-                <!-- 글 쓴 시간 -->
+                {{ article.name }}님의 게시글
+                <!-- @TODO 글 쓴 시간 -->
                 <div class="caption" style="line-height: 0.5rem !important;">2019.09.19</div>
               </div>
               <!-- @TODO: 프로필 바로가기 설정 -->
@@ -21,7 +21,8 @@
             </v-card-title>
             <v-card-text
               class="black--text article--area mt-5"
-            >Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</v-card-text>
+              v-html="makeNewLine(article.post)"
+            ></v-card-text>
             <v-card-actions>
               <div class="ml-auto">
                 <v-tooltip top>
@@ -52,7 +53,15 @@
 <script>
 	export default {
 		// @SEE 'middleware/auth.js'
-		middleware: 'auth'
+    middleware: 'auth',
+    mounted () {
+      this.$store.dispatch('getArticles')
+    },
+    methods: {
+      makeNewLine(context) {
+        return context.replace(/\n/g, "<br />")
+      }
+    }
 	}
 </script>
 

@@ -14,5 +14,4 @@ const firebaseConfig = {
 
 // 객체 덮어쓰지 않기
 !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : ''
-export const auth = firebase.auth()
 export default firebase

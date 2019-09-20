@@ -11,11 +11,15 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      { name: 'robots', content: 'index,follow' },
+      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
+      { property: 'og:type', content: 'website' },
+      { property: 'og:title', content: '강동대학교 SNS' },
+      { property: 'og:description', content: '강동대학교 학생들을 위한 소셜 네트워크 서비스' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
+      { rel: 'canonical', href: 'http://n2ptune.dothome.co.kr/' }
     ]
   },
   /*
