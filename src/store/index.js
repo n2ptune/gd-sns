@@ -27,7 +27,7 @@ export const actions = {
       .signInWithPopup(new firebase.auth.GoogleAuthProvider())
       .then(result => {
         commit('setUser', result.user)
-        $nuxt.$router.push('/')
+        $nuxt.$router.push('/articles')
       })
       .catch(e => {
         console.log(e.message)
