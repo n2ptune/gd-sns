@@ -12,17 +12,17 @@
               <div class="author--text">
                 {{ article.name }}님의 게시글
                 <!-- @TODO 글 쓴 시간 -->
-                <div class="caption" style="line-height: 0.5rem !important;">2019.09.19</div>
+                <div
+                  class="caption"
+                  style="line-height: 0.5rem !important;"
+                >{{ stampToDate(article.drawtime) }}</div>
               </div>
               <!-- @TODO: 프로필 바로가기 설정 -->
               <v-btn icon right class="ml-auto">
                 <v-icon color="green accent-4">mdi-tooltip-account</v-icon>
               </v-btn>
             </v-card-title>
-            <v-card-text
-              class="black--text article--area mt-5"
-              v-html="makeNewLine(article.post)"
-            ></v-card-text>
+            <v-card-text class="black--text article--area mt-5" v-html="makeNewLine(article.post)"></v-card-text>
             <v-card-actions>
               <div class="ml-auto">
                 <v-tooltip top>
@@ -53,15 +53,29 @@
 <script>
 	export default {
 		// @SEE 'middleware/auth.js'
-    middleware: 'auth',
-    mounted () {
-      this.$store.dispatch('getArticles')
-    },
-    methods: {
-      makeNewLine(context) {
-        return context.replace(/\n/g, "<br />")
-      }
-    }
+		middleware: 'auth',
+		mounted() {
+			this.$store.dispatch('getArticles')
+		},
+		methods: {
+			makeNewLine(context) {
+				return context.replace(/\n/g, '<br />')
+			},
+			stampToDate(stamp) {
+				// @SEE https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
+				const options = {
+					dateStyle: 'full',
+					timeStyle: 'short',
+					hour12: false
+				}
+				return new Date(
+					new this.$firebase.firestore.Timestamp(
+						stamp.seconds,
+						stamp.nanoseconds
+					).toDate()
+				).toLocaleDateString('ko-KR', options)
+			}
+		}
 	}
 </script>
 

@@ -37,3 +37,40 @@ npm run start
 ## 참조
 
 더 자세한 내용은 [Nuxt.js docs](https://nuxtjs.org/)에서 확인하실 수 있습니다.
+
+## Fix
+
+* firebase.firestore.Timestamp.toDate().toLocaleDateString
+
+```javascript
+/* path: src/pages/articles/index.vue */
+const options = {
+  dateStyle: 'full',
+  // only minuates, seconds
+  timeStyle: 'short',
+  // PM 11:00 -> 23:00
+  hour12: false
+}
+// It can have more options
+// @SEE MDN https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
+// @SEE src/pages/articles/index.vue line at 64
+return new Date(
+  new this.$firebase.firestore.Timestamp(
+    stamp.seconds,
+    stamp.nanoseconds
+  ).toDate()
+).toLocaleDateString('ko-KR', options)
+```
+
+* use $nuxt variable in store
+
+```javascript
+/* path: src/store/index.js 
+ * When you want use options(push, redirect) of router in vuex actions
+ * try below code */
+commit('setUser', result.user)
+$nuxt.$router.push('/articles')
+// This code completes the commit and moves the router.
+// i don't know that why i can use $nuxt variable
+// it was not written anywhere of official site
+```
