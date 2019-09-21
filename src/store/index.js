@@ -45,6 +45,10 @@ export const mutations = {
 }
 
 export const actions = {
+  // nuxtServerInit
+  async nuxtServerInit({ commit, dispatch }) {
+    console.log(firebase.auth().currentUser)
+  },
   login({ commit }) {
     commit('setLoading')
     firebase
