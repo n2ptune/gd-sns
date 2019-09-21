@@ -45,8 +45,8 @@ export const mutations = {
 }
 
 export const actions = {
-  // nuxtServerInit
-  async nuxtServerInit({ commit, dispatch }) {
+  // * nuxtServerInit
+  async nuxtServerInit() {
     console.log(firebase.auth().currentUser)
   },
   login({ commit }) {
@@ -61,6 +61,15 @@ export const actions = {
       .catch(e => {
         console.log(e.message)
       })
+    // @SEE https://firebase.google.com/docs/auth/web/auth-state-persistence
+    // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    //   .then(result => {
+    //     return firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
+    //       .then(result => {
+    //         commit('setUser', result.user)
+    //         console.log(result.user)
+    //       })
+    //   })
   },
   logout({ commit }) {
     commit('setLoading')
