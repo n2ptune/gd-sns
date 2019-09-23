@@ -24,6 +24,7 @@ export const mutations = {
   setUser(state, getUser) {
     // 이미 객체가 있을 때
     if (state.user !== null) return (state.user = null)
+    if (getUser === null) return (state.user = null)
     state.user = {}
     // 모든 정보를 복사하면 maximum call stack size exceeded 오류 발생
     Object.assign(state.user, getUser.providerData[0])
@@ -46,8 +47,8 @@ export const mutations = {
 
 export const actions = {
   // * nuxtServerInit
-  async nuxtServerInit() {
-    console.log(firebase.auth().currentUser)
+  nuxtServerInit({ commit }) {
+    // 
   },
   login({ commit }) {
     commit('setLoading')
