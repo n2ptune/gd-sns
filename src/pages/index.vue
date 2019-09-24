@@ -17,11 +17,19 @@
           class="title white--text font-weight-bold text--shadow"
         >강동대학교 학생들을 위한 Social Network Service</div>
         <v-btn
+          v-if="!$store.state.user"
           class="mt-5 font-weight-bold title"
           width="24rem"
           color="amber lighten-1"
           to="/login"
         >구글로 로그인하기</v-btn>
+        <v-btn
+          v-else
+          class="mt-5 font-weight-bold title"
+          width="24rem"
+          color="amber lighten-1"
+          to="/articles"
+        >새 게시글 모아보기</v-btn>
       </span>
     </v-container>
   </v-content>
@@ -88,8 +96,15 @@
   }
   .av-fadedown {
     -webkit-animation-name: fadeDown;
+    -ms-animation-name: fadeDown;
+    -o-animation-name: fadeDown;
+    -moz-animation-name: fadeDown;
     animation-name: fadeDown;
-    animation-duration: 2.5s;
+    -webkit-animation-duration: 1.5s;
+    -ms-animation-duration: 1.5s;
+    -o-animation-duration: 1.5s;
+    -moz-animation-duration: 1.5s;
+    animation-duration: 1.5s;
   }
   .avatar-container {
     display: table;

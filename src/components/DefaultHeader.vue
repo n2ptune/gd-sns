@@ -8,11 +8,13 @@
     </span>
     <span class="ml-auto">
       <v-btn
-        v-if="$store.state.user === null ? false : true"
+        v-if="$store.state.user"
         icon
-        to="/draw"
+        to="/articles"
       >
-        <v-icon>mdi-post-outline</v-icon>
+        <v-icon>
+          mdi-package-variant-closed
+        </v-icon>
       </v-btn>
       <v-btn
         :loading="$store.state.btnLoading"

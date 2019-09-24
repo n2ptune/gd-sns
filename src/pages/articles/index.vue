@@ -82,7 +82,19 @@
 
 <script>
 	export default {
-    // @SEE 'middleware/auth.js'
+    // async asyncData() {
+    //   let articles = []
+    //   const db = firebase.firestore()
+    //   const article = await db.collection('articles')
+    //     .orderBy('aid', 'desc')
+    //     .get()
+    //     .then(q => q.forEach(doc => {
+    //       // remove reduplication
+    //       const _rmdup = (el) => el.aid === doc.data().aid
+    //       if(!articles.some(_rmdup)) articles.push(doc.data())
+    //     }))
+    //   return { articles }
+    // },
     head () {
       return {
         title: '게시글 모아보기',
