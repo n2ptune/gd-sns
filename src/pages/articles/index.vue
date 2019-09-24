@@ -1,10 +1,12 @@
 <template>
   <v-content style="background-color: #eee;">
     <v-container>
-      <!-- @TODO columns standard default 12, sm 8, md 6 -->
+      <!-- @TODO columns standard setting default 12, sm 8, md 6 -->
       <v-row justify="center">
         <v-col cols="12" sm="8" md="6">
-          <v-card>
+          <v-card
+            dark
+          >
             <v-card-title>
               <div class="title">
                 게시글 작성하기
@@ -19,8 +21,9 @@
                 </v-col>
                 <v-col cols="10">
                 <v-textarea
+                  outlined
                   auto-grow
-                  color="deep-orange"
+                  color="orange darken-1"
                   placeholder="새 글 작성하기"
                   label="새 글"
                 ></v-textarea>
