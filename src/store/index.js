@@ -28,7 +28,6 @@ export const mutations = {
     state.user = {}
     // 모든 정보를 복사하면 maximum call stack size exceeded 오류 발생
     Object.assign(state.user, getUser.providerData[0])
-    state.btnLoading = false
   },
   setLoading(state) {
     state.btnLoading = !state.btnLoading
@@ -59,7 +58,6 @@ export const actions = {
         firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
         commit('setUser', result.user)
         $nuxt.$router.push('/articles')
-        console.log(firebase.auth().currentUser.getIdToken(false))
       })
       .catch(e => {
         console.log(e.message)
@@ -116,6 +114,7 @@ export const actions = {
     await db.collection('articles').add(author)
     commit('setDrawing')
   },
+  // @TODO Vuex 저장하지 않고 컴포넌트에서 가져오기
   async getArticles({ state, commit }) {
     await db.collection('articles')
       .orderBy('aid', 'desc')

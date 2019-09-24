@@ -2,7 +2,7 @@
   <v-content style="background-color: #eee;">
     <v-container>
       <!-- Article Template -->
-      <v-row v-for="article in $store.state.articles" :key="article.aid" justify="center">
+      <v-row justify="center" v-for="article in $store.state.articles" :key="article.aid">
         <v-col cols="12" sm="8" md="6">
           <v-card class="article--container">
             <v-card-title>
@@ -11,13 +11,11 @@
               </v-avatar>
               <div class="author--text">
                 {{ article.name }}님의 게시글
-                <!-- @TODO 글 쓴 시간 -->
                 <div
                   class="caption"
                   style="line-height: 0.5rem !important;"
                 >{{ stampToDate(article.drawtime) }}</div>
               </div>
-              <!-- @TODO: 프로필 바로가기 설정 -->
               <v-btn icon right class="ml-auto">
                 <v-icon color="green accent-4">mdi-tooltip-account</v-icon>
               </v-btn>
@@ -67,8 +65,8 @@
 					dateStyle: 'full',
 					timeStyle: 'short',
 					hour12: false
-        }
-        // @NEED_RESOLVE Can't show and overflow text at iphone
+				}
+				// @NEED_RESOLVE Can't show and overflow text at iphone
 				return new Date(
 					new this.$firebase.firestore.Timestamp(
 						stamp.seconds,
