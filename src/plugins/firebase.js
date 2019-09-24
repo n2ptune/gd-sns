@@ -2,6 +2,8 @@ import * as firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
 
+import Vue from 'vue'
+
 const firebaseConfig = {
   apiKey: 'AIzaSyAkWlXdHfxX6jn4dPf8FODn_iDnNEy7QX0',
   authDomain: 'n2ptune-github-io.firebaseapp.com',
@@ -12,8 +14,7 @@ const firebaseConfig = {
   appId: '1:92866541720:web:9d253eb0d5486348eab8ed'
 }
 
-firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-
 // 객체 덮어쓰지 않기
 !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : ''
+Vue.prototype.$firebase = firebase
 export default firebase

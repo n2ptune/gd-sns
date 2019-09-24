@@ -6,7 +6,7 @@
   "private": true,
   "config": {
     "nuxt": {
-      "port": "3020"
+      "port": "13339"
     }
   },
   "scripts": {
@@ -19,7 +19,8 @@
     "@nuxtjs/axios": "^5.3.6",
     "firebase": "^6.6.1",
     "nuxt": "^2.0.0",
-    "nuxt-webfontloader": "^1.1.0"
+    "nuxt-webfontloader": "^1.1.0",
+    "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.8.5",

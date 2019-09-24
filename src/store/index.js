@@ -48,7 +48,7 @@ export const mutations = {
 export const actions = {
   // * nuxtServerInit
   nuxtServerInit({ commit }) {
-    // 
+    
   },
   login({ commit }) {
     commit('setLoading')
@@ -56,8 +56,10 @@ export const actions = {
       .auth()
       .signInWithPopup(new firebase.auth.GoogleAuthProvider())
       .then(result => {
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
         commit('setUser', result.user)
         $nuxt.$router.push('/articles')
+        console.log(firebase.auth().currentUser.getIdToken(false))
       })
       .catch(e => {
         console.log(e.message)
