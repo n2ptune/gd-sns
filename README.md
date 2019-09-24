@@ -74,3 +74,14 @@ $nuxt.$router.push('/articles')
 // i don't know that why i can use $nuxt variable
 // it was not written anywhere of official site
 ```
+
+* initialize state of vuex when page reload or refresh
+
+use module [vuex-persistedstate](https://github.com/robinvdvleuten/vuex-persistedstate)
+
+```javascript
+// path: src/plugins/vuexPersistence.js
+import createPersistedState from 'vuex-persistedstate'
+
+export default ({store}) => createPersistedState({})(store)
+```
