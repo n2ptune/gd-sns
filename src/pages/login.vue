@@ -75,7 +75,6 @@
     },
     methods: {
       async login () {
-        // await this.$store.dispatch('login')
         await this.$store.dispatch('login')
       }
     }

@@ -29,6 +29,7 @@ export const mutations = {
     // 모든 정보를 복사하면 maximum call stack size exceeded 오류 발생
     Object.assign(state.user, getUser.providerData[0])
     $nuxt.$router.push('/articles')
+    state.btnLoading = !state.btnLoading
   },
   setLoading(state) {
     state.btnLoading = !state.btnLoading
@@ -48,35 +49,28 @@ export const mutations = {
 export const actions = {
   // * nuxtServerInit
   nuxtServerInit({ commit }) {
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
   },
-  async login({ commit }) {
+  login({ commit }) {
     commit('setLoading')
-    // firebase
-    //   .auth()
-    //   .signInWithPopup(new firebase.auth.GoogleAuthProvider())
-    //   .then(result => {
-    //     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-    //     commit('setUser', result.user)
-    //     $nuxt.$router.push('/articles')
-    //   })
-    //   .catch(e => {
-    //     console.log(e.message)
-    //   })
-    await firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider())
-    // @SEE https://firebase.google.com/docs/auth/web/auth-state-persistence
-    // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-    //   .then(result => {
-    //     return firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
-    //       .then(result => {
-    //         commit('setUser', result.user)
-    //         console.log(result.user)
-    //       })
-    //   })
+    // @SEE indexedDB https://www.tutorialdocs.com/article/indexeddb-tutorial.html
+    // @SEE indexedDB https://developer.mozilla.org/ko/docs/IndexedDB/Using_IndexedDB
+    const dbReq = window.indexedDB.open('firebaseLocalStorageDb')
+    dbReq.onerror = async (event) => {
+      await firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider())
+    }
+    dbReq.onsuccess = (event) => {
+      const idb = dbReq.result
+      const fs = 'firebaseLocalStorage'
+      idb.transaction(fs).objectStore(fs).openCursor().onsuccess = async (event) => {
+        if(event.target.result) commit('setUser', event.target.result.value.value)
+        else await firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider())
+      }
+    }
   },
   async logout({ commit }) {
     commit('setUser', null)
     await firebase.auth().signOut()
-    commit('setLoading')
   },
   async draw({ state, commit }, text) {
     // @TODO 게시글 ID 구현 (SAME AS AUTO_INCREMENT)
@@ -132,3 +126,24 @@ export const actions = {
     })
   }
 }
+// @SEE https://firebase.google.com/docs/auth/web/auth-state-persistence
+// firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+//   .then(result => {
+//     return firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
+//       .then(result => {
+//         commit('setUser', result.user)
+//         console.log(result.user)
+//       })
+//   })
+
+// firebase
+//   .auth()
+//   .signInWithPopup(new firebase.auth.GoogleAuthProvider())
+//   .then(result => {
+//     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+//     commit('setUser', result.user)
+//     $nuxt.$router.push('/articles')
+//   })
+//   .catch(e => {
+//     console.log(e.message)
+//   })

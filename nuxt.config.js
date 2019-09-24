@@ -110,5 +110,6 @@ export default {
   srcDir: 'src/',
   generate: {
     dir: 'dist/'
-  }
+  },
+  vendor: ['~/plugins/vuexPersistence.js', '~/store.index.js']
 }
