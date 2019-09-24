@@ -72,10 +72,11 @@ export const actions = {
     //       })
     //   })
   },
-  logout({ commit }) {
+  async logout({ commit }) {
     commit('setLoading')
     commit('setUser', null)
-    firebase.auth().signOut()
+    await firebase.auth().signOut()
+    commit('setLoading')
   },
   async draw({ state, commit }, text) {
     // @TODO 게시글 ID 구현 (SAME AS AUTO_INCREMENT)

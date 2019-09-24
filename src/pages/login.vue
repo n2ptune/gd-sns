@@ -1,12 +1,14 @@
 <template>
   <v-content style="background-color: #eee;">
     <v-container>
-      <v-layout row wrap justify-center>
-        <v-flex xs7>
+      <v-row justify="center">
+        <v-col cols="10" sm="8" md="6">
           <div class="headline text-center">Login</div>
           <v-divider class="my-5" />
-        </v-flex>
-        <v-flex xs10 sm8 md6>
+        </v-col>
+      </v-row>
+      <v-row justify="center">
+        <v-col cols="10" sm="8" md="6">
           <v-card>
             <v-card-title class="d-block text-center">
               <v-icon x-large color="primary">mdi-google-plus</v-icon>
@@ -37,9 +39,10 @@
               >login</v-btn>
             </v-card-actions>
           </v-card>
-        </v-flex>
-        <v-flex xs12></v-flex>
-        <v-flex xs10 sm8 md6 class="my-5">
+        </v-col>
+      </v-row>
+      <v-row justify="center">
+        <v-col cols="10" sm="8" md="6">
           <v-btn
             block
             color="white"
@@ -53,8 +56,8 @@
           <div class="subtitle-1 text-center grey--text font-weight-thin my-2">
             <v-icon class="mb-1">mdi-arrow-up</v-icon>구글에서 회원가입
           </div>
-        </v-flex>
-      </v-layout>
+        </v-col>
+      </v-row>
     </v-container>
   </v-content>
 </template>

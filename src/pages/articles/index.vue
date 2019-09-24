@@ -1,6 +1,35 @@
 <template>
   <v-content style="background-color: #eee;">
     <v-container>
+      <!-- @TODO columns standard default 12, sm 8, md 6 -->
+      <v-row justify="center">
+        <v-col cols="12" sm="8" md="6">
+          <v-card>
+            <v-card-title>
+              <div class="title">
+                게시글 작성하기
+              </div>
+            </v-card-title>
+            <v-card-text>
+              <v-row justify="center">
+                <v-col cols="1">
+                  <v-avatar size="28">
+                    <img :src="$store.state.user.photoURL" :alt="$store.state.user.displayName">
+                  </v-avatar>
+                </v-col>
+                <v-col cols="10">
+                <v-textarea
+                  auto-grow
+                  color="deep-orange"
+                  placeholder="새 글 작성하기"
+                  label="새 글"
+                ></v-textarea>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
       <!-- Article Template -->
       <v-row justify="center" v-for="article in $store.state.articles" :key="article.aid">
         <v-col cols="12" sm="8" md="6">
@@ -50,7 +79,15 @@
 
 <script>
 	export default {
-		// @SEE 'middleware/auth.js'
+    // @SEE 'middleware/auth.js'
+    head () {
+      return {
+        title: '게시글 모아보기',
+        meta: [
+          { name: 'description', content: '게시글 모아보기' }
+        ]
+      }
+    },
 		middleware: 'auth',
 		mounted() {
 			this.$store.dispatch('getArticles')
@@ -66,7 +103,8 @@
 					timeStyle: 'short',
 					hour12: false
 				}
-				// @NEED_RESOLVE Can't show and overflow text at iphone
+        // @NEED_RESOLVE Can't show and overflow text at iphone
+        // @RESOLVE overflow text at iphone with font-family-apple-system-
 				return new Date(
 					new this.$firebase.firestore.Timestamp(
 						stamp.seconds,
