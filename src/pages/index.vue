@@ -7,7 +7,7 @@
       <span class="mx-auto text-center d-block t-container av-fadedown">
         <div class="mb-3 avatar-container mx-auto elevation-15">
           <v-avatar size="128">
-            <img src="~/assets/gangdong.png" alt="">
+            <img src="~/assets/gangdong.png" alt="강동이">
           </v-avatar>
         </div>
         <div class="mb-4">

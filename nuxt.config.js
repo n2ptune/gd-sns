@@ -3,19 +3,28 @@ import colors from 'vuetify/es5/util/colors'
 export default {
   mode: 'spa',
   /*
-  ** Headers of the page
-  */
+   ** Headers of the page
+   */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
-    title: process.env.npm_package_name || '',
+    titleTemplate: '%s - ' + '강동대학교 SNS',
+    title: '강동대학교 SNS',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
       { name: 'robots', content: 'index,follow' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
+      {
+        hid: 'description',
+        name: 'description',
+        content: '강동대학교 학생들을 위한 소셜 네트워크 서비스'
+      },
       { property: 'og:type', content: 'website' },
       { property: 'og:title', content: '강동대학교 SNS' },
-      { property: 'og:description', content: '강동대학교 학생들을 위한 소셜 네트워크 서비스' }
+      { property: 'og:image', content: '~/assets/gangdong.png' },
+      { property: 'og:url', content: 'http://n2ptune.dothome.co.kr/' },
+      {
+        property: 'og:description',
+        content: '강동대학교 학생들을 위한 소셜 네트워크 서비스'
+      }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
@@ -23,51 +32,46 @@ export default {
     ]
   },
   /*
-  ** Customize the progress-bar color
-  */
+   ** Customize the progress-bar color
+   */
   loading: { color: '#fff' },
   /*
-  ** Global CSS
-  */
-  css: [
-    '~/assets/variables.scss'
-  ],
+   ** Global CSS
+   */
+  css: ['~/assets/variables.scss'],
   /*
-  ** Plugins to load before mounting the App
-  */
+   ** Plugins to load before mounting the App
+   */
   plugins: [
     { src: '~/plugins/firebase.js' },
     { src: '~/plugins/vuexPersistence.js', mode: 'client' }
   ],
   /*
-  ** Nuxt.js dev-modules
-  */
-  buildModules: [
-    '@nuxtjs/vuetify',
-  ],
+   ** Nuxt.js dev-modules
+   */
+  buildModules: ['@nuxtjs/vuetify'],
   /*
-  ** Nuxt.js modules
-  */
+   ** Nuxt.js modules
+   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     'nuxt-webfontloader'
   ],
   /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
-  axios: {
-  },
+   ** Axios module configuration
+   ** See https://axios.nuxtjs.org/options
+   */
+  axios: {},
   /*
-  ** vuetify module configuration
-  ** https://github.com/nuxt-community/vuetify-module
-  */
- webfontloader: {
-   google: {
-     families: ['Nanum+Gothic:400,700,800&display=swap']
-   }
- },
+   ** vuetify module configuration
+   ** https://github.com/nuxt-community/vuetify-module
+   */
+  webfontloader: {
+    google: {
+      families: ['Nanum+Gothic:400,700,800&display=swap']
+    }
+  },
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     treeShake: true,
@@ -87,12 +91,12 @@ export default {
     }
   },
   /*
-  ** Build configuration
-  */
+   ** Build configuration
+   */
   build: {
     /*
-    ** You can extend webpack config here
-    */
+     ** You can extend webpack config here
+     */
     loaders: [
       {
         test: /\.(png|jpe?g|gif|svg)$/,
@@ -101,10 +105,9 @@ export default {
           limit: 1000, // 1초
           name: 'img/[name].[hash:7].[ext]'
         }
-      },
+      }
     ],
-    extend (config, ctx) {
-    }
+    extend(config, ctx) {}
   },
   // Custom Below
   srcDir: 'src/',
