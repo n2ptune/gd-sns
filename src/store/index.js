@@ -43,6 +43,10 @@ export const mutations = {
     } else {
       state.articles.push(articles)
     }
+    state.articles.sort((a, b) => {
+      const result = a.aid > b.aid ? -1 : 1
+      return result
+    })
   }
 }
 
@@ -107,6 +111,7 @@ export const actions = {
       drawtime: firebase.firestore.Timestamp.now()
     }
     await db.collection('articles').add(author)
+    commit('setArticles', author)
     commit('setDrawing')
   },
   // @TODO Vuex 저장하지 않고 컴포넌트에서 가져오기

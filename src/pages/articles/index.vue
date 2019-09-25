@@ -3,8 +3,10 @@
     <v-container>
       <!-- @TODO columns standard setting default 12, sm 8, md 6 -->
       <v-row justify="center">
-        <v-col cols="12" sm="8" md="6">
+        <v-col cols="12" sm="8" class="mb-3">
           <v-card
+            elevation="8"
+            color="primary darken-2"
             dark
           >
             <v-card-title>
@@ -15,21 +17,35 @@
             <v-card-text>
               <v-row justify="center">
                 <v-col cols="1">
-                  <v-avatar size="28">
+                  <v-avatar :size="avatarSizeHandler">
                     <img :src="$store.state.user.photoURL" :alt="$store.state.user.displayName">
                   </v-avatar>
                 </v-col>
-                <v-col cols="10">
+                <v-col cols="10" class="mr-1">
                 <v-textarea
+                  :rules="[rules.postRule]"
+                  v-model="newArticleText"
                   outlined
                   auto-grow
-                  color="orange darken-1"
+                  color="white"
+                  style="font-size: 1.1rem !important;"
                   placeholder="새 글 작성하기"
                   label="새 글"
                 ></v-textarea>
                 </v-col>
               </v-row>
             </v-card-text>
+            <v-card-actions>
+              <v-item-group class="ml-auto pr-2 pb-2">
+                <v-btn
+                  :loading="$store.state.drawing"
+                  @click="draw"
+                  outlined
+                  color="dark"
+                  x-large
+                >작성</v-btn>
+              </v-item-group>
+            </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
@@ -82,25 +98,20 @@
 
 <script>
 	export default {
-    // async asyncData() {
-    //   let articles = []
-    //   const db = firebase.firestore()
-    //   const article = await db.collection('articles')
-    //     .orderBy('aid', 'desc')
-    //     .get()
-    //     .then(q => q.forEach(doc => {
-    //       // remove reduplication
-    //       const _rmdup = (el) => el.aid === doc.data().aid
-    //       if(!articles.some(_rmdup)) articles.push(doc.data())
-    //     }))
-    //   return { articles }
-    // },
     head () {
       return {
         title: '게시글 모아보기',
         meta: [
           { name: 'description', content: '게시글 모아보기' }
         ]
+      }
+    },
+    data () {
+      return {
+        rules: {
+          postRule: v => !!v || '빈 내용을 게시할 수 없습니다.'
+        },
+        newArticleText: ''
       }
     },
 		middleware: 'auth',
@@ -126,16 +137,35 @@
 						stamp.nanoseconds
 					).toDate()
 				).toLocaleDateString('ko-KR', options)
-			}
-		}
+      },
+      async draw () {
+        if(this.newArticleText) {
+          await this.$store.dispatch('draw', this.newArticleText)
+          this.newArticleText = ''
+        }
+      }
+    },
+    computed: {
+      avatarSizeHandler () {
+        switch(this.$vuetify.breakpoint.name) {
+          case 'xs':
+          case 'sm': return 24
+          case 'md': return 36
+          case 'lg': return 48
+        }
+      }
+    }
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.author--text {
 		font-size: 1rem !important;
 	}
 	.article--area {
 		font-size: 1.25rem !important;
 	}
+  textarea {
+    line-height: 1.45rem;
+  }
 </style>
