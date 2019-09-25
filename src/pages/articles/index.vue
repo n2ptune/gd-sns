@@ -179,7 +179,7 @@
         let text = document.getElementById('new-post-textarea')
         if(text.value) {
           await this.$store.dispatch('draw', text.value)
-          text.value = ''
+          document.getElementById('new-post-textarea').value = ''
         }
       },
       articleHandler ({ type, aid }) {
