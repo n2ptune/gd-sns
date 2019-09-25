@@ -1,7 +1,6 @@
 <template>
   <v-content style="background-color: #eee;">
     <v-container>
-      <!-- @TODO columns standard setting default 12, sm 8, md 6 -->
       <v-row justify="center">
         <v-col cols="12" sm="8" class="mb-3">
           <v-card
@@ -84,9 +83,12 @@
                     <v-list-item
                       v-for="(item, index) in items"
                       :key="index"
-                      @click=""
+                      @click="articleHandler({ type: item.type, aid: article.aid })"
                     >
-                      <v-list-item-title>{{ item.title }}</v-list-item-title>
+                      <v-list-item-title><strong>{{ item.title }}</strong></v-list-item-title>
+                      <v-list-item-icon>
+                        <v-icon>{{ item.icon }}</v-icon>
+                      </v-list-item-icon>
                     </v-list-item>
                   </v-list>
                 </v-menu>
@@ -136,10 +138,16 @@
           postRule: v => !!v || '빈 내용을 게시할 수 없습니다.'
         },
         items: [
-          { title: 'dropdown 1' },
-          { title: 'dropdown 2' },
-          { title: 'dropdown 3' },
-          { title: 'dropdown 4' }
+          {
+            title: '게시글 삭제',
+            icon: 'mdi-delete-forever-outline',
+            type: 'Delete'
+          },
+          {
+            title: '게시글 수정',
+            icon: 'mdi-pencil-outline',
+            type: 'Update'
+          },
         ]
       }
     },
@@ -149,7 +157,7 @@
 		},
 		methods: {
 			makeNewLine(context) {
-				return context.replace(/\n/g, '<br />')
+				return context.replace(/\n/g, '<br/>')
 			},
 			stampToDate(stamp) {
 				// @SEE https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
@@ -172,6 +180,17 @@
         if(text.value) {
           await this.$store.dispatch('draw', text.value)
           text.value = ''
+        }
+      },
+      articleHandler ({ type, aid }) {
+        if(!type || !aid) return
+        switch(type) {
+          case 'Delete':
+            const result = this.$store.dispatch('deleteArticle', aid)
+            // if(result) success code
+            // else failed code
+            return
+          case 'Update': return
         }
       }
     },

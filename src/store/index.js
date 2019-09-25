@@ -47,6 +47,10 @@ export const mutations = {
       const result = a.aid > b.aid ? -1 : 1
       return result
     })
+  },
+  spliceArticle(state, aid) {
+    const targetIdx = state.articles.findIndex(el => el.aid === aid)
+    state.articles.splice(targetIdx, 1)
   }
 }
 
@@ -128,6 +132,11 @@ export const actions = {
             commit('setArticles', doc.data())
           }
       })
+    })
+  },
+  deleteArticle({ commit }, aid) {
+    db.collection('articles').where('aid', '==', aid).get().then(q => {
+      q.forEach(ss => ss.ref.delete().then(result => commit('spliceArticle', aid)))
     })
   }
 }
