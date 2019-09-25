@@ -19,7 +19,6 @@ export default {
       },
       { property: 'og:type', content: 'website' },
       { property: 'og:title', content: '강동대학교 SNS' },
-      { property: 'og:image', content: '~/assets/gangdong.png' },
       { property: 'og:url', content: 'http://n2ptune.dothome.co.kr/' },
       {
         property: 'og:description',
