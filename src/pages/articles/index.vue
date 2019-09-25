@@ -22,16 +22,15 @@
                   </v-avatar>
                 </v-col>
                 <v-col cols="10" class="mr-1">
-                <v-textarea
-                  :rules="[rules.postRule]"
-                  v-model="newArticleText"
-                  outlined
-                  auto-grow
-                  color="white"
-                  style="font-size: 1.1rem !important;"
-                  placeholder="새 글 작성하기"
-                  label="새 글"
-                ></v-textarea>
+                  <v-textarea
+                    id="new-post-textarea"
+                    :rules="[rules.postRule]"
+                    auto-grow
+                    outlined
+                    color="white"
+                    placeholder="새 글 작성하기"
+                    label="새 글"
+                  ></v-textarea>
                 </v-col>
               </v-row>
             </v-card-text>
@@ -58,15 +57,40 @@
                 <img :src="article.photoURL" :alt="article.name" />
               </v-avatar>
               <div class="author--text">
-                {{ article.name }}님의 게시글
+                {{ article.uid === $store.state.user.uid ? '나' : `${article.name}님` }}의 게시글
                 <div
                   class="caption"
                   style="line-height: 0.5rem !important;"
                 >{{ stampToDate(article.drawtime) }}</div>
               </div>
-              <v-btn icon right class="ml-auto">
-                <v-icon color="green accent-4">mdi-tooltip-account</v-icon>
-              </v-btn>
+              <v-item-group class="ml-auto">
+                <v-btn icon>
+                  <v-icon color="green accent-4">mdi-tooltip-account</v-icon>
+                </v-btn>
+                <!-- 게시글 메뉴 수정, 삭제 등 -->
+                <v-menu offset-y>
+                  <template v-slot:activator="{ on }">
+                    <v-btn
+                      v-if="article.uid === $store.state.user.uid"
+                      v-on="on"
+                      icon
+                    >
+                      <v-icon>
+                        mdi-dots-vertical
+                      </v-icon>
+                    </v-btn>
+                  </template>
+                  <v-list>
+                    <v-list-item
+                      v-for="(item, index) in items"
+                      :key="index"
+                      @click=""
+                    >
+                      <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
+              </v-item-group>
             </v-card-title>
             <v-card-text class="black--text article--area mt-5" v-html="makeNewLine(article.post)"></v-card-text>
             <v-card-actions>
@@ -111,7 +135,12 @@
         rules: {
           postRule: v => !!v || '빈 내용을 게시할 수 없습니다.'
         },
-        newArticleText: ''
+        items: [
+          { title: 'dropdown 1' },
+          { title: 'dropdown 2' },
+          { title: 'dropdown 3' },
+          { title: 'dropdown 4' }
+        ]
       }
     },
 		middleware: 'auth',
@@ -139,9 +168,10 @@
 				).toLocaleDateString('ko-KR', options)
       },
       async draw () {
-        if(this.newArticleText) {
-          await this.$store.dispatch('draw', this.newArticleText)
-          this.newArticleText = ''
+        let text = document.getElementById('new-post-textarea')
+        if(text.value) {
+          await this.$store.dispatch('draw', text.value)
+          text.value = ''
         }
       }
     },
