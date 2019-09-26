@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
+    "dayjs": "^1.8.16",
     "firebase": "^6.6.1",
     "nuxt": "^2.0.0",
     "nuxt-webfontloader": "^1.1.0",

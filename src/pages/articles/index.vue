@@ -54,7 +54,7 @@
                           <div
                             class="caption"
                             style="line-height: 0.5rem !important;"
-                          >{{ dummyDate() }}</div>
+                          >몇 초 전</div>
                         </div>
                         <v-item-group class="ml-auto">
                           <v-btn icon>
@@ -99,14 +99,9 @@
           <v-card flat color="transparent">
             <v-card-text class="text-center">
               <div class="btn-group">
-                <v-tooltip top transition="scale-transition">
-                  <template v-slot:activator="{ on }">
-                    <v-btn small icon text fab v-on="on" @click="postDialog = true">
-                      <v-icon>mdi-newspaper-plus</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>새 게시글 작성</span>
-                </v-tooltip>
+                <v-btn small icon text fab @click="postDialog = true">
+                  <v-icon>mdi-newspaper-plus</v-icon>
+                </v-btn>
                 <v-tooltip top transition="scale-transition">
                   <template v-slot:activator="{ on }">
                     <v-btn small icon text fab v-on="on" @click>
@@ -227,20 +222,12 @@
 				return context.replace(/\n/g, '<br/>')
 			},
 			stampToDate(stamp) {
-				// @SEE https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
-				const options = {
-					dateStyle: 'full',
-					timeStyle: 'short',
-					hour12: false
-				}
-				// @NEED_RESOLVE Can't show and overflow text at iphone
-				// @RESOLVE overflow text at iphone with font-family-apple-system-
-				return new Date(
-					new this.$firebase.firestore.Timestamp(
-						stamp.seconds,
-						stamp.nanoseconds
-					).toDate()
-				).toLocaleDateString('ko-KR', options)
+        const time = new this.$firebase.firestore.Timestamp(
+          stamp.seconds,
+          stamp.nanoseconds
+        ).toDate()
+
+        return this.$dayjs(time).fromNow()
 			},
 			async draw() {
 				if (this.dummyPostText) {
@@ -254,16 +241,10 @@
 				switch (type) {
 					case 'Delete':
 						const result = this.$store.dispatch('deleteArticle', aid)
-						// if(result) success code
-						// else failed code
 						return
 					case 'Update':
 						return
 				}
-			},
-			dummyDate() {
-				const date = new Date()
-				return `${date.getFullYear()}. ${date.getMonth() + 1}. ${date.getDate()}`
 			}
 		},
 		computed: {

@@ -43,7 +43,8 @@ export default {
    */
   plugins: [
     { src: '~/plugins/firebase.js' },
-    { src: '~/plugins/vuexPersistence.js', mode: 'client' }
+    { src: '~/plugins/vuexPersistence.js', mode: 'client' },
+    { src: '~/plugins/day.js', mode: 'client' }
   ],
   /*
    ** Nuxt.js dev-modules
