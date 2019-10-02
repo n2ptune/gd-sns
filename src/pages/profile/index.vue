@@ -9,13 +9,22 @@
             </v-card-title>
             <v-card-text>
               <v-list>
-                <v-list-item @click>
+                <v-list-item>
                   <v-list-item-icon>
                     <v-icon>mdi-clipboard-account-outline</v-icon>
                   </v-list-item-icon>
                   <v-list-item-content>
                     <v-list-item-title>{{ $store.state.user.displayName }}</v-list-item-title>
                     <v-list-item-subtitle>이름</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item @click="$router.push('/profile/my-articles')">
+                  <v-list-item-icon>
+                    <v-icon>mdi-post</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>내 게시글 모아보기</v-list-item-title>
+                    <v-list-item-subtitle>내 게시글 모아보기</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
                 <v-list-item @click="logout">

@@ -48,6 +48,9 @@ export const mutations = {
       return result
     })
   },
+  clearArticles(state) {
+    state.articles = []
+  },
   spliceArticle(state, aid) {
     const targetIdx = state.articles.findIndex(el => el.aid === aid)
     state.articles.splice(targetIdx, 1)
@@ -120,18 +123,26 @@ export const actions = {
   },
   // @TODO Vuex 저장하지 않고 컴포넌트에서 가져오기
   async getArticles({ state, commit }) {
+    commit('clearArticles')
     await db.collection('articles')
       .orderBy('aid', 'desc')
       .get()
       .then((q) => {
         q.forEach((doc) => {
-          const removeIteration = (el) => {
-            return el.aid === doc.data().aid
-          }
+          const removeIteration = (el) => el.aid === doc.data().aid
           if(!state.articles.some(removeIteration)) {
             commit('setArticles', doc.data())
           }
       })
+    })
+  },
+  async getMyArticles({ state, commit }) {
+    commit('clearArticles')
+    const d = await db.collection('articles')
+      .where('uid', '==', state.user.uid)
+      .get()
+    d.forEach((doc) => {
+      commit('setArticles', doc.data())
     })
   },
   deleteArticle({ commit }, aid) {
