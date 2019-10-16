@@ -58,14 +58,14 @@
                             <v-icon color="green accent-4">mdi-tooltip-account</v-icon>
                           </v-btn>
                           <v-btn icon>
-                            <v-icon color="green accent-4">mdi-dots-vertical</v-icon>
+                            <v-icon>mdi-dots-vertical</v-icon>
                           </v-btn>
                         </v-item-group>
                       </v-card-title>
-                      <v-card-text
-                        class="black--text article--area mt-5"
-                        v-html="makeNewLine(dummyPostText)"
-                      ></v-card-text>
+                      <v-card-text>
+                        <div class="black--text article--area-text mt-5" v-html="makeNewLine(dummyPostText)"></div>
+                        <div class="article--area-dummy mt-5"></div>
+                      </v-card-text>
                       <v-card-actions>
                         <div class="ml-auto">
                           <v-btn icon>
@@ -77,6 +77,21 @@
                         </div>
                       </v-card-actions>
                     </v-card>
+                  </v-col>
+                  <v-col cols="12">
+                    <div class="d-flex justify-center">
+                      <input
+                        type="file"
+                        multiple
+                        ref="imageUpload"
+                        accept="image/*"
+                        @change="handleImageUpload()"
+                        style="display: none;"
+                      />
+                      <v-btn icon dark @click="$refs.imageUpload.click()">
+                        <v-icon>mdi-image-plus</v-icon>
+                      </v-btn>
+                    </div>
                   </v-col>
                   <v-col cols="12" sm="8" md="4" class="mt-8">
                     <v-btn
@@ -118,12 +133,12 @@
 </template>
 
 <script>
-import ArticleTemplate from '~/components/ArticleTemplate.vue'
+	import ArticleTemplate from '~/components/ArticleTemplate.vue'
 
 	export default {
-    components: {
-      ArticleTemplate
-    },
+		components: {
+			ArticleTemplate
+		},
 		head() {
 			return {
 				title: '게시글 모아보기',
@@ -139,10 +154,10 @@ import ArticleTemplate from '~/components/ArticleTemplate.vue'
 				}
 			}
 		},
-    middleware: 'auth',
-    mounted () {
-      this.$store.dispatch('getArticles')
-    },
+		middleware: 'auth',
+		mounted() {
+			this.$store.dispatch('getArticles')
+		},
 		methods: {
 			async draw() {
 				if (this.dummyPostText) {
@@ -150,15 +165,37 @@ import ArticleTemplate from '~/components/ArticleTemplate.vue'
 					this.dummyPostText = ''
 					this.postDialog = false
 				}
-      },
-      makeNewLine(context) {
+			},
+			makeNewLine(context) {
 				return context.replace(/\n/g, '<br/>')
 			},
+			handleImageUpload() {
+				const files = this.$refs.imageUpload.files
+				const preview = document.getElementsByClassName('article--area-dummy')[0]
+
+				for (let i = 0; i < files.length; i++) {
+					const file = files[i]
+
+					const img = document.createElement('img')
+					img.classList.add('img-obj')
+					img.file = file
+
+					preview.appendChild(img)
+
+					const reader = new FileReader()
+					reader.onload = (function(aImg) {
+						return function(e) {
+							aImg.src = e.target.result
+						}
+          })(img)
+          reader.readAsDataURL(file)
+				}
+			}
 		}
 	}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	textarea {
 		line-height: 1.45rem;
 	}
@@ -170,4 +207,10 @@ import ArticleTemplate from '~/components/ArticleTemplate.vue'
 		);
 		border-radius: 0 !important;
 	}
+  .img-obj {
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 120px;
+    height: 120px;
+  }
 </style>
