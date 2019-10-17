@@ -43,8 +43,13 @@
           </v-card-title>
           <v-card-text>
             <div class="article--area black--text mt-5" v-html="makeNewLine(article.post)"></div>
-            <div class="article--photo-area" v-if="article.images">
-              <img v-for="(image, index) in article.images" :key="index" :class="`user-image-${index}`" :src="getImageURL(image, index)" :alt="image">
+            <div class="article--photo-area mt-5" v-if="article.images">
+              <img
+                v-for="(image, index) in article.images"
+                :key="index"
+                :src="image.url"
+                class="user-image"
+              />
             </div>
           </v-card-text>
           <v-card-actions>
@@ -75,9 +80,9 @@
 
 <script>
 	export default {
-    data () {
-      return {
-        items: [
+		data() {
+			return {
+				items: [
 					{
 						title: '게시글 삭제',
 						icon: 'mdi-delete-forever-outline',
@@ -89,10 +94,9 @@
 						type: 'Update'
 					}
 				]
-      }
-    },
-		mounted() {
+			}
 		},
+		mounted() {},
 		methods: {
 			makeNewLine(context) {
 				return context.replace(/\n/g, '<br/>')
@@ -121,11 +125,7 @@
 					case 'Update':
 						return
 				}
-      },
-      async getImageURL(image, index) {
-        const url = await this.$firebase.storage().refFromURL(image.url).getDownloadURL().then()
-        return url
-      }
+			}
 		},
 		computed: {
 			avatarSizeHandler() {
@@ -149,5 +149,9 @@
 	}
 	.article--area {
 		font-size: 1.25rem !important;
-  }
+	}
+	.user-image {
+		width: 100%;
+		border-radius: 10px;
+	}
 </style>

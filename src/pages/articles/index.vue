@@ -63,7 +63,10 @@
                         </v-item-group>
                       </v-card-title>
                       <v-card-text>
-                        <div class="black--text article--area-text mt-5" v-html="makeNewLine(dummyPostText)"></div>
+                        <div
+                          class="black--text article--area-text mt-5"
+                          v-html="makeNewLine(dummyPostText)"
+                        ></div>
                         <div class="article--area-dummy mt-5"></div>
                       </v-card-text>
                       <v-card-actions>
@@ -161,10 +164,10 @@
 		methods: {
 			async draw() {
 				if (this.dummyPostText) {
-          const options = {
-            text: this.dummyPostText,
-            files: this.$refs.imageUpload.files
-          }
+					const options = {
+						text: this.dummyPostText,
+						files: this.$refs.imageUpload.files
+					}
 					await this.$store.dispatch('draw', options)
 					this.dummyPostText = ''
 					this.postDialog = false
@@ -191,8 +194,8 @@
 						return function(e) {
 							aImg.src = e.target.result
 						}
-          })(img)
-          reader.readAsDataURL(file)
+					})(img)
+					reader.readAsDataURL(file)
 				}
 			}
 		}
@@ -211,10 +214,10 @@
 		);
 		border-radius: 0 !important;
 	}
-  .img-obj {
-    margin-right: 10px;
-    margin-left: 10px;
-    width: 120px;
-    height: 120px;
-  }
+	.img-obj {
+		margin-right: 10px;
+		margin-left: 10px;
+		width: 120px;
+		height: 120px;
+	}
 </style>

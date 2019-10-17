@@ -39,7 +39,7 @@ export const mutations = {
     state.drawing = !state.drawing
   },
   setArticles(state, articles) {
-    if(state.articles === null) {
+    if (state.articles === null) {
       state.articles = articles
     } else {
       state.articles.push(articles)
@@ -68,15 +68,24 @@ export const actions = {
     // @SEE indexedDB https://www.tutorialdocs.com/article/indexeddb-tutorial.html
     // @SEE indexedDB https://developer.mozilla.org/ko/docs/IndexedDB/Using_IndexedDB
     const dbReq = window.indexedDB.open('firebaseLocalStorageDb')
-    dbReq.onerror = async (event) => {
-      await firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider())
+    dbReq.onerror = async event => {
+      await firebase
+        .auth()
+        .signInWithRedirect(new firebase.auth.GoogleAuthProvider())
     }
-    dbReq.onsuccess = (event) => {
+    dbReq.onsuccess = event => {
       const idb = dbReq.result
       const fs = 'firebaseLocalStorage'
-      idb.transaction(fs).objectStore(fs).openCursor().onsuccess = async (event) => {
-        if(event.target.result) commit('setUser', event.target.result.value.value)
-        else await firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider())
+      idb
+        .transaction(fs)
+        .objectStore(fs)
+        .openCursor().onsuccess = async event => {
+        if (event.target.result)
+          commit('setUser', event.target.result.value.value)
+        else
+          await firebase
+            .auth()
+            .signInWithRedirect(new firebase.auth.GoogleAuthProvider())
       }
     }
   },
@@ -89,15 +98,15 @@ export const actions = {
     // @TODO 게시글 ID 구현 (SAME AS AUTO_INCREMENT)
     // @SEE https://firebase.google.com/docs/firestore/query-data/get-data?hl=ko
     // 게시글 ID Default 값 설정 (=0)
-    if(state.user === null) return false
+    if (state.user === null) return false
     commit('setDrawing')
     let articleID = 0
     // 규칙 문서 불러오기
     const openRule = db.collection('rules').doc('article')
     // 규칙 문서 데이터 가져오기 (필드 값 currentID)
-    await openRule.get().then((doc) => {
+    await openRule.get().then(doc => {
       // 필드 데이터 검증
-      if(doc.exists) {
+      if (doc.exists) {
         // 데이터 불러오기
         const data = doc.data()
         // 값을 가져오고 규칙 값 증가시키기
@@ -112,36 +121,43 @@ export const actions = {
     })
     // 이미지 업로드
     let images = []
-    if(options.files !== undefined) {
+    if (options.files !== undefined) {
       const fileLength = options.files.length
       const makeRandomImageName = () => {
         let result = ''
-        const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+        const possible =
+          'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
-        for(let i = 0; i < 17; i++) {
+        for (let i = 0; i < 17; i++) {
           result += possible.charAt(Math.floor(Math.random() * possible.length))
         }
 
         return result
       }
 
-      for(let i = 0; i < fileLength; i++) {
+      for (let i = 0; i < fileLength; i++) {
         const file = options.files[i]
         const name = file.name
         // 확장자 분리
-        const fileExt = name.split('.').slice(-1).toString()
+        const fileExt = name
+          .split('.')
+          .slice(-1)
+          .toString()
         // 파일 이름 랜덤으로 지정
         const rndName = makeRandomImageName()
         // 파일 이름과 확장자 결합
         const fileName = `images/${rndName}.${fileExt}`
 
         const storageRef = storage.ref()
-        const r = await storageRef.child(fileName).put(file).then((s) => {
-          images.push({
-            ref: fileName,
-            url: 'gs://n2ptune-github-io.appspot.com/' + fileName
+        const r = await storageRef
+          .child(fileName)
+          .put(file)
+          .then(s => {
+            images.push({
+              ref: fileName,
+              url: 'gs://n2ptune-github-io.appspot.com/' + fileName
+            })
           })
-        })
       }
     }
     const author = {
@@ -161,31 +177,48 @@ export const actions = {
   // @TODO Vuex 저장하지 않고 컴포넌트에서 가져오기
   async getArticles({ state, commit }) {
     commit('clearArticles')
-    await db.collection('articles')
+    await db
+      .collection('articles')
       .orderBy('aid', 'desc')
       .get()
-      .then((q) => {
-        q.forEach((doc) => {
-          const removeIteration = (el) => el.aid === doc.data().aid
-          if(!state.articles.some(removeIteration)) {
-            commit('setArticles', doc.data())
+      .then(q => {
+        q.forEach(async doc => {
+          const removeIteration = el => el.aid === doc.data().aid
+          if (!state.articles.some(removeIteration)) {
+            let data = doc.data()
+            if (data.hasOwnProperty('images')) {
+              for (let i = 0; i < data.images.length; i++) {
+                const url = await storage
+                  .ref()
+                  .child(data.images[i].ref)
+                  .getDownloadURL()
+                data.images[i].url = url
+              }
+            }
+            commit('setArticles', data)
           }
+        })
       })
-    })
   },
   async getMyArticles({ state, commit }) {
     commit('clearArticles')
-    const d = await db.collection('articles')
+    const d = await db
+      .collection('articles')
       .where('uid', '==', state.user.uid)
       .get()
-    d.forEach((doc) => {
+    d.forEach(doc => {
       commit('setArticles', doc.data())
     })
   },
   deleteArticle({ commit }, aid) {
-    db.collection('articles').where('aid', '==', aid).get().then(q => {
-      q.forEach(ss => ss.ref.delete().then(result => commit('spliceArticle', aid)))
-    })
+    db.collection('articles')
+      .where('aid', '==', aid)
+      .get()
+      .then(q => {
+        q.forEach(ss =>
+          ss.ref.delete().then(result => commit('spliceArticle', aid))
+        )
+      })
   }
 }
 // @SEE https://firebase.google.com/docs/auth/web/auth-state-persistence
