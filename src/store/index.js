@@ -191,6 +191,11 @@ export const actions = {
                 const url = await storage
                   .ref()
                   .child(data.images[i].ref)
+                  // .updateMetadata({
+                  //   customMetadata: {
+                  //     'orientation': 'top-left'
+                  //   }
+                  // })
                   .getDownloadURL()
                 data.images[i].url = url
               }
