@@ -41,7 +41,12 @@
               </v-menu>
             </v-item-group>
           </v-card-title>
-          <v-card-text class="black--text article--area mt-5" v-html="makeNewLine(article.post)"></v-card-text>
+          <v-card-text>
+            <div class="article--area black--text mt-5" v-html="makeNewLine(article.post)"></div>
+            <div class="article--photo-area" v-if="article.images">
+              <img v-for="(image, index) in article.images" :key="index" :class="`user-image-${index}`" :src="getImageURL(image, index)" :alt="image">
+            </div>
+          </v-card-text>
           <v-card-actions>
             <div class="ml-auto">
               <v-tooltip top>
@@ -116,7 +121,11 @@
 					case 'Update':
 						return
 				}
-			}
+      },
+      async getImageURL(image, index) {
+        const url = await this.$firebase.storage().refFromURL(image.url).getDownloadURL().then()
+        return url
+      }
 		},
 		computed: {
 			avatarSizeHandler() {

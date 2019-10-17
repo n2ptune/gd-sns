@@ -1,6 +1,7 @@
 import firebase from '~/plugins/firebase.js'
 
 const db = firebase.firestore()
+const storage = firebase.storage()
 
 /* vuex actions에서 첫번째 인자로 오는 context에 대해서
  * {
@@ -83,7 +84,8 @@ export const actions = {
     commit('setUser', null)
     await firebase.auth().signOut()
   },
-  async draw({ state, commit }, text) {
+  // images type = FileList
+  async draw({ state, commit }, options) {
     // @TODO 게시글 ID 구현 (SAME AS AUTO_INCREMENT)
     // @SEE https://firebase.google.com/docs/firestore/query-data/get-data?hl=ko
     // 게시글 ID Default 값 설정 (=0)
@@ -108,14 +110,49 @@ export const actions = {
         console.log('실패')
       }
     })
+    // 이미지 업로드
+    let images = []
+    if(options.files !== undefined) {
+      const fileLength = options.files.length
+      const makeRandomImageName = () => {
+        let result = ''
+        const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+
+        for(let i = 0; i < 17; i++) {
+          result += possible.charAt(Math.floor(Math.random() * possible.length))
+        }
+
+        return result
+      }
+
+      for(let i = 0; i < fileLength; i++) {
+        const file = options.files[i]
+        const name = file.name
+        // 확장자 분리
+        const fileExt = name.split('.').slice(-1).toString()
+        // 파일 이름 랜덤으로 지정
+        const rndName = makeRandomImageName()
+        // 파일 이름과 확장자 결합
+        const fileName = `images/${rndName}.${fileExt}`
+
+        const storageRef = storage.ref()
+        const r = await storageRef.child(fileName).put(file).then((s) => {
+          images.push({
+            ref: fileName,
+            url: 'gs://n2ptune-github-io.appspot.com/' + fileName
+          })
+        })
+      }
+    }
     const author = {
       name: state.user.displayName,
       email: state.user.email,
       photoURL: state.user.photoURL,
-      post: text,
+      post: options.text,
       uid: state.user.uid,
       aid: articleID,
-      drawtime: firebase.firestore.Timestamp.now()
+      drawtime: firebase.firestore.Timestamp.now(),
+      images: images
     }
     await db.collection('articles').add(author)
     commit('setArticles', author)

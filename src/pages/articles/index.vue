@@ -161,7 +161,11 @@
 		methods: {
 			async draw() {
 				if (this.dummyPostText) {
-					await this.$store.dispatch('draw', this.dummyPostText)
+          const options = {
+            text: this.dummyPostText,
+            files: this.$refs.imageUpload.files
+          }
+					await this.$store.dispatch('draw', options)
 					this.dummyPostText = ''
 					this.postDialog = false
 				}
