@@ -220,7 +220,17 @@ export const actions = {
       .where('uid', '==', state.user.uid)
       .get()
     d.forEach(doc => {
-      commit('setArticles', doc.data())
+      let data = doc.data()
+        if (data.hasOwnProperty('images')) {
+          for (let i = 0; i < data.images.length; i++) {
+            const url = await storage
+              .ref()
+              .child(data.images[i].ref)
+              .getDownloadURL()
+            data.images[i].url = url
+          }
+        }
+      commit('setArticles', data)
     })
   },
   deleteArticle({ commit }, aid) {
