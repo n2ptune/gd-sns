@@ -48,6 +48,7 @@
                 v-for="(image, index) in article.images"
                 :key="index"
                 :src="image.url"
+                @load="imageLoadHandler(this)"
                 class="user-image"
               />
             </div>
@@ -125,7 +126,10 @@
 					case 'Update':
 						return
 				}
-			}
+      },
+      imageLoadHandler: function(e) {
+        console.log(e)
+      }
 		},
 		computed: {
 			avatarSizeHandler() {
@@ -151,7 +155,7 @@
 		font-size: 1.25rem !important;
 	}
 	.user-image {
-		width: 100%;
-		border-radius: 10px;
+		width: 100% !important;
+		border-radius: 10px !important;
 	}
 </style>

@@ -136,7 +136,7 @@
 </template>
 
 <script>
-	import ArticleTemplate from '~/components/ArticleTemplate.vue'
+  import ArticleTemplate from '@/components/ArticleTemplate.vue'
 
 	export default {
 		components: {
