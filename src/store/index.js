@@ -1,4 +1,6 @@
 import firebase from '~/plugins/firebase.js'
+import EXIF from 'exif-js'
+import loadImage from 'blueimp-load-image'
 
 const db = firebase.firestore()
 const storage = firebase.storage()
@@ -193,6 +195,17 @@ export const actions = {
                   .child(data.images[i].ref)
                   .getDownloadURL()
                 data.images[i].url = url
+                loadImage(url, async (img, __data) => {
+                  if(img.type === 'error') {
+                    console.log('error')
+                  } else {
+                    try {
+                      // 회전 값 저장
+                      const ori = await __data.exif.get('Orientation')
+                      data.images[i].orientation = ori
+                    } catch(e) {}
+                  }
+                }, { meta: true })
               }
             }
             commit('setArticles', data)
