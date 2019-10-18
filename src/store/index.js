@@ -219,7 +219,7 @@ export const actions = {
       .collection('articles')
       .where('uid', '==', state.user.uid)
       .get()
-    d.forEach(doc => {
+    d.forEach(async doc => {
       let data = doc.data()
         if (data.hasOwnProperty('images')) {
           for (let i = 0; i < data.images.length; i++) {
