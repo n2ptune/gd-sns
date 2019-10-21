@@ -5,6 +5,8 @@ import loadImage from 'blueimp-load-image'
 const db = firebase.firestore()
 const storage = firebase.storage()
 
+export const strict = false
+
 /* vuex actions에서 첫번째 인자로 오는 context에 대해서
  * {
  *   state,      // same as store.state, or local state if in modules
@@ -57,6 +59,10 @@ export const mutations = {
   spliceArticle(state, aid) {
     const targetIdx = state.articles.findIndex(el => el.aid === aid)
     state.articles.splice(targetIdx, 1)
+  },
+  updateArticle(state, aid, __new) {
+    const targetIdx = state.articles.findIndex(el => el.aid === aid)
+    state.articles[targetIdx] = __new
   }
 }
 
@@ -170,7 +176,14 @@ export const actions = {
       uid: state.user.uid,
       aid: articleID,
       drawtime: firebase.firestore.Timestamp.now(),
-      images: images
+      images: images,
+      comment: {
+        isShow: false,
+        data: []
+      },
+      likes: {
+        people: []
+      }
     }
     await db.collection('articles').add(author)
     commit('setArticles', author)
@@ -188,6 +201,12 @@ export const actions = {
           const removeIteration = el => el.aid === doc.data().aid
           if (!state.articles.some(removeIteration)) {
             let data = doc.data()
+            const defaultCmtOptions = {
+              isShow: false,
+              data: []
+            }
+            data.comment = data.hasOwnProperty('comment') ? data.comment : defaultCmtOptions
+            data.likes = data.hasOwnProperty('likes') ? data.likes : { people: [] }
             if (data.hasOwnProperty('images')) {
               for (let i = 0; i < data.images.length; i++) {
                 const url = await storage

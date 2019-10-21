@@ -70,22 +70,28 @@
           </v-card-text>
           <v-card-actions>
             <div class="ml-auto">
-              <v-tooltip top>
-                <template v-slot:activator="{ on }">
-                  <v-btn icon v-on="on">
-                    <v-icon>mdi-charity</v-icon>
-                  </v-btn>
-                </template>
-                <span>공감하기</span>
-              </v-tooltip>
-              <v-tooltip top>
-                <template v-slot:activator="{ on }">
-                  <v-btn icon v-on="on">
-                    <v-icon>mdi-message-plus</v-icon>
-                  </v-btn>
-                </template>
-                <span>댓글</span>
-              </v-tooltip>
+              <v-btn
+                text
+                @click="setLike(article)"
+                :color="likesColorHandler(article.likes.people)"
+              >
+                {{
+                  likesColorHandler(article.likes.people) === 'primary'
+                    ? '좋아요 취소'
+                    : '좋아요'
+                }}
+                <v-icon right :color="likesColorHandler(article.likes.people)"
+                  >mdi-thumb-up</v-icon
+                >
+              </v-btn>
+              <v-btn icon append>
+                <v-icon>mdi-message-plus</v-icon>
+              </v-btn>
+            </div>
+          </v-card-actions>
+          <v-card-actions v-show="article.comment.isShow">
+            <div>
+              ㅁㄴㅇ
             </div>
           </v-card-actions>
         </v-card>
@@ -140,6 +146,28 @@ export default {
           return
         case 'Update':
           return
+      }
+    },
+    likesColorHandler(people) {
+      const isLike = people.find(el => {
+        return el === this.$store.state.user.uid
+      })
+      return isLike ? 'primary' : 'grey'
+    },
+    setLike(article) {
+      // 좋아요 값 가져오기
+      const isLike =
+        this.likesColorHandler(article.likes.people) === 'primary'
+          ? true
+          : false
+      if(isLike) {
+        // @TODO
+        console.log('좋아요 취소 구현')
+      } else {
+        this.$store.dispatch('like/setLike', {
+          uid: this.$store.state.user.uid,
+          article
+        })
       }
     }
   },

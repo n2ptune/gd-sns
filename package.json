@@ -6,7 +6,7 @@
   "private": true,
   "config": {
     "nuxt": {
-      "port": "13340"
+      "port": "13341"
     }
   },
   "scripts": {
@@ -21,7 +21,7 @@
     "dayjs": "^1.8.16",
     "exif-js": "^2.3.0",
     "firebase": "^6.6.1",
-    "nuxt": "^2.0.0",
+    "nuxt": "^2.10.1",
     "nuxt-webfontloader": "^1.1.0",
     "vuex-persistedstate": "^2.5.4"
   },
