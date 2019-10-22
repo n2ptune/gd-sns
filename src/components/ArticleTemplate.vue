@@ -80,9 +80,14 @@
                     ? '좋아요 취소'
                     : '좋아요'
                 }}
-                <v-icon right :color="likesColorHandler(article.likes.people)"
-                  >mdi-thumb-up</v-icon
-                >
+                <v-badge color="amber accent-1">
+                  <template v-slot:badge>{{
+                    article.likes.people.length
+                  }}</template>
+                  <v-icon right :color="likesColorHandler(article.likes.people)"
+                    >mdi-thumb-up</v-icon
+                  >
+                </v-badge>
               </v-btn>
               <v-btn icon append>
                 <v-icon>mdi-message-plus</v-icon>
@@ -160,9 +165,11 @@ export default {
         this.likesColorHandler(article.likes.people) === 'primary'
           ? true
           : false
-      if(isLike) {
-        // @TODO
-        console.log('좋아요 취소 구현')
+      if (isLike) {
+        this.$store.dispatch('like/disLike', {
+          uid: this.$store.state.user.uid,
+          article
+        })
       } else {
         this.$store.dispatch('like/setLike', {
           uid: this.$store.state.user.uid,
