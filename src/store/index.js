@@ -155,15 +155,20 @@ export const actions = {
         const rndName = makeRandomImageName()
         // 파일 이름과 확장자 결합
         const fileName = `images/${rndName}.${fileExt}`
-
+        // 스토리지 참조값 가져오기
         const storageRef = storage.ref()
+        // 이미지 넣기
         const r = await storageRef
           .child(fileName)
           .put(file)
-          .then(s => {
+          .then(async (s) => {
+            // URL 뽑아내기
+            const url = await storageRef
+                  .child(fileName)
+                  .getDownloadURL()
             images.push({
               ref: fileName,
-              url: 'gs://n2ptune-github-io.appspot.com/' + fileName
+              url
             })
           })
       }
