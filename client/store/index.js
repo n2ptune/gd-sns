@@ -69,7 +69,7 @@ export const mutations = {
 export const actions = {
   // * nuxtServerInit
   nuxtServerInit({ commit }) {
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
   },
   login({ commit }) {
     commit('setLoading')

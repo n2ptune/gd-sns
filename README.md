@@ -3,7 +3,7 @@
 ## 데모
 
 강동대학교 소셜 네트워크 서비스는 다음의 링크를 통해 데모 사이트를 확인하실 수 있습니다.
-[강동대학교 SNS](http://n2ptune.dothome.co.kr/)
+[강동대학교 SNS](https://gd-sns.herokuapp.com)
 
 ## 개발
 
