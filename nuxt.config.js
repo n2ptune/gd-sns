@@ -110,7 +110,7 @@ export default {
     extend(config, ctx) {}
   },
   // Custom Below
-  srcDir: 'src/',
+  srcDir: 'client/',
   generate: {
     dir: 'dist/'
   },
