@@ -1,6 +1,6 @@
 <template>
   <v-content style="background-color: #eee;">
-    <v-container>
+    <v-container class="main-container">
       <v-row justify="center">
         <!-- dialog -->
         <v-dialog
@@ -130,7 +130,7 @@
           </v-card>
         </v-col>
       </v-row>
-      <article-template></article-template>
+      <article-template />
     </v-container>
   </v-content>
 </template>
@@ -215,9 +215,12 @@
 		border-radius: 0 !important;
 	}
 	.img-obj {
-		margin-right: 10px;
-		margin-left: 10px;
-		width: 120px;
-		height: 120px;
+		display: block;
+    width: 100%;
 	}
+  @media screen and (max-width: 600px) {
+    .main-container {
+      padding: 0;
+    }
+  }
 </style>
