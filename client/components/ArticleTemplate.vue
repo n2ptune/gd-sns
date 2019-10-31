@@ -90,7 +90,7 @@
               </v-btn>
             </div>
           </v-card-actions>
-          <v-card-actions v-show="article.comment.isShow">
+          <v-card-actions v-if="article.comment.isShow">
             <div>ㅁㄴㅇ</div>
           </v-card-actions>
         </v-card>

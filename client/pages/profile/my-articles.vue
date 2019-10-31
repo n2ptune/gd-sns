@@ -15,7 +15,7 @@ export default {
     ArticleTemplate
   },
   mounted () {
-    this.$store.dispatch('getMyArticles')
+    this.$store.dispatch('getArticles', { type: 'my' })
   }
 }
 </script>

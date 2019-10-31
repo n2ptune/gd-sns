@@ -159,7 +159,7 @@
 		},
 		middleware: 'auth',
 		mounted() {
-			this.$store.dispatch('getArticles')
+			this.$store.dispatch('getArticles', { type: 'all' })
 		},
 		methods: {
 			async draw() {

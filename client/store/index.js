@@ -87,13 +87,13 @@ export const actions = {
         .transaction(fs)
         .objectStore(fs)
         .openCursor().onsuccess = async event => {
-        if (event.target.result)
-          commit('setUser', event.target.result.value.value)
-        else
-          await firebase
-            .auth()
-            .signInWithRedirect(new firebase.auth.GoogleAuthProvider())
-      }
+          if (event.target.result)
+            commit('setUser', event.target.result.value.value)
+          else
+            await firebase
+              .auth()
+              .signInWithRedirect(new firebase.auth.GoogleAuthProvider())
+        }
     }
   },
   async logout({ commit }) {
@@ -163,8 +163,8 @@ export const actions = {
           .then(async (s) => {
             // URL 뽑아내기
             const url = await storageRef
-                  .child(fileName)
-                  .getDownloadURL()
+              .child(fileName)
+              .getDownloadURL()
             images.push({
               ref: fileName,
               url
@@ -194,97 +194,89 @@ export const actions = {
     commit('setDrawing')
   },
   // @TODO Vuex 저장하지 않고 컴포넌트에서 가져오기
-  async getArticles({ state, commit }) {
+  async getArticles({ state, commit }, { type }) {
     commit('clearArticles')
-    await db
-      .collection('articles')
-      .orderBy('aid', 'desc')
-      .get()
-      .then(q => {
-        q.forEach(async doc => {
-          const removeIteration = el => el.aid === doc.data().aid
-          if (!state.articles.some(removeIteration)) {
-            let data = doc.data()
-            const defaultCmtOptions = {
-              isShow: false,
-              data: []
-            }
-            data.comment = data.hasOwnProperty('comment') ? data.comment : defaultCmtOptions
-            data.likes = data.hasOwnProperty('likes') ? data.likes : { people: [] }
-            if (data.hasOwnProperty('images')) {
-              for (let i = 0; i < data.images.length; i++) {
-                const url = await storage
-                  .ref()
-                  .child(data.images[i].ref)
-                  .getDownloadURL()
-                data.images[i].url = url
-                loadImage(url, async (img, __data) => {
-                  if(img.type === 'error') {
-                    console.log('error')
-                  } else {
-                    try {
-                      // 회전 값 저장
-                      const ori = await __data.exif.get('Orientation')
-                      data.images[i].orientation = ori
-                    } catch(e) {}
-                  }
-                }, { meta: true })
+
+    if (type === 'all') {
+      await db
+        .collection('articles')
+        .orderBy('aid', 'desc')
+        .get()
+        .then(q => {
+          q.forEach(async doc => {
+            const removeIteration = el => el.aid === doc.data().aid
+            if (!state.articles.some(removeIteration)) {
+              let data = doc.data()
+              const defaultCmtOptions = {
+                isShow: false,
+                data: []
               }
+              data.comment = data.hasOwnProperty('comment') ? data.comment : defaultCmtOptions
+              data.likes = data.hasOwnProperty('likes') ? data.likes : { people: [] }
+              if (data.hasOwnProperty('images')) {
+                for (let i = 0; i < data.images.length; i++) {
+                  const url = await storage
+                    .ref()
+                    .child(data.images[i].ref)
+                    .getDownloadURL()
+                  data.images[i].url = url
+                  loadImage(url, async (img, __data) => {
+                    if (img.type === 'error') {
+                      console.log('error')
+                    } else {
+                      try {
+                        // 회전 값 저장
+                        const ori = await __data.exif.get('Orientation')
+                        data.images[i].orientation = ori
+                      } catch (e) { }
+                    }
+                  }, { meta: true })
+                }
+              }
+              commit('setArticles', data)
             }
-            commit('setArticles', data)
-          }
+          })
         })
-      })
-  },
-  async getMyArticles({ state, commit }) {
-    commit('clearArticles')
-    const d = await db
-      .collection('articles')
-      .where('uid', '==', state.user.uid)
-      .get()
-    d.forEach(async doc => {
-      let data = doc.data()
-        if (data.hasOwnProperty('images')) {
-          for (let i = 0; i < data.images.length; i++) {
-            const url = await storage
-              .ref()
-              .child(data.images[i].ref)
-              .getDownloadURL()
-            data.images[i].url = url
-          }
-        }
-      commit('setArticles', data)
-    })
-  },
-  deleteArticle({ commit }, aid) {
-    db.collection('articles')
-      .where('aid', '==', aid)
-      .get()
-      .then(q => {
-        q.forEach(ss =>
-          ss.ref.delete().then(result => commit('spliceArticle', aid))
-        )
-      })
+    } else if(type === 'my') {
+      await db
+        .collection('articles')
+        .where('uid', '==', state.user.uid)
+        .get()
+        .then(q => {
+          q.forEach(async doc => {
+            const removeIteration = el => el.aid === doc.data().aid
+            if (!state.articles.some(removeIteration)) {
+              let data = doc.data()
+              const defaultCmtOptions = {
+                isShow: false,
+                data: []
+              }
+              data.comment = data.hasOwnProperty('comment') ? data.comment : defaultCmtOptions
+              data.likes = data.hasOwnProperty('likes') ? data.likes : { people: [] }
+              if (data.hasOwnProperty('images')) {
+                for (let i = 0; i < data.images.length; i++) {
+                  const url = await storage
+                    .ref()
+                    .child(data.images[i].ref)
+                    .getDownloadURL()
+                  data.images[i].url = url
+                  loadImage(url, async (img, __data) => {
+                    if (img.type === 'error') {
+                      console.log('error')
+                    } else {
+                      try {
+                        // 회전 값 저장
+                        const ori = await __data.exif.get('Orientation')
+                        data.images[i].orientation = ori
+                      } catch (e) { }
+                    }
+                  }, { meta: true })
+                }
+              }
+              commit('setArticles', data)
+            }
+          })
+        })
+    }
   }
 }
-// @SEE https://firebase.google.com/docs/auth/web/auth-state-persistence
-// firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-//   .then(result => {
-//     return firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
-//       .then(result => {
-//         commit('setUser', result.user)
-//         console.log(result.user)
-//       })
-//   })
-
-// firebase
-//   .auth()
-//   .signInWithPopup(new firebase.auth.GoogleAuthProvider())
-//   .then(result => {
-//     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-//     commit('setUser', result.user)
-//     $nuxt.$router.push('/articles')
-//   })
-//   .catch(e => {
-//     console.log(e.message)
-//   })
