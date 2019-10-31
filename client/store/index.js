@@ -1,4 +1,4 @@
-import firebase from '~/plugins/firebase.js'
+import firebase from '@/plugins/firebase.js'
 import EXIF from 'exif-js'
 import loadImage from 'blueimp-load-image'
 

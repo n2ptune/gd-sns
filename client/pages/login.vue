@@ -63,19 +63,19 @@
 </template>
 
 <script>
-  import firebase from '~/plugins/firebase'
+  import firebase from '@/plugins/firebase'
 
 	export default {
-    async mounted () {
-      await firebase.auth().getRedirectResult().then(result => {
+    mounted () {
+      firebase.auth().getRedirectResult().then(result => {
           if(result.credential) {
             this.$store.commit('setUser', result.user)
           }
         }).catch(e => console.log(e.message))
     },
     methods: {
-      async login () {
-        await this.$store.dispatch('login')
+      login () {
+        this.$store.dispatch('login')
       }
     }
   }

@@ -42,7 +42,7 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    { src: '~/plugins/firebase.js' },
+    { src: '~/plugins/firebase.js', mode: 'client' },
     { src: '~/plugins/vuexPersistence.js', mode: 'client' },
     { src: '~/plugins/day.js', mode: 'client' }
   ],
@@ -111,8 +111,5 @@ export default {
   },
   // Custom Below
   srcDir: 'client/',
-  generate: {
-    dir: 'dist/'
-  },
   vendor: ['~/plugins/vuexPersistence.js', '~/store.index.js']
 }
