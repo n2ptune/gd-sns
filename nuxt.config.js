@@ -1,7 +1,7 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
-  mode: 'universal',
+  mode: 'spa',
   /*
    ** Headers of the page
    */
@@ -111,5 +111,8 @@ export default {
   },
   // Custom Below
   srcDir: 'client/',
+  generate: {
+    dir: 'dist/'
+  },
   vendor: ['~/plugins/vuexPersistence.js', '~/store.index.js']
 }
