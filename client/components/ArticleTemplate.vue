@@ -52,7 +52,7 @@
             <div class="article--photo-area mt-5" v-if="article.images">
               <div class="article--photo-area-multiple" v-if="article.images.length > 1">
                 <img v-for="n in 1" :src="article.images[n-1].url" :key="n" class="user-image" />
-                <image-dialog :images="article.images"></image-dialog>
+                <image-dialog :images="imageObjectGenerator(article.images)"></image-dialog>
               </div>
               <div class="article--photo-area-multiple" v-else>
                 <img
@@ -100,7 +100,7 @@
 </template>
 
 <script>
-	import { mapMutations } from 'vuex'
+	import { mapMutations, mapGetters } from 'vuex'
 	import ImageDialog from '@/components/dialogs/ImageDialog'
 
 	export default {
@@ -125,6 +125,10 @@
 		},
 		mounted() {},
 		methods: {
+			...mapMutations({
+				handleValue: 'dialog/setShowImage',
+				pushImageData: 'dialog/pushImageData'
+			}),
 			makeNewLine(context) {
 				return context.replace(/\n/g, '<br/>')
 			},
@@ -176,6 +180,10 @@
 						article
 					})
 				}
+			},
+			imageObjectGenerator(images) {
+				const key = images[0].ref
+				return Object.assign(images, { key, show: false })
 			}
 		},
 		computed: {
@@ -194,7 +202,10 @@
 				return orientation => {
 					return orientation ? 'rotate-90' : ''
 				}
-			}
+			},
+			...mapGetters({
+				getImageRef: 'dialog/getImageRef'
+			})
 		}
 	}
 </script>
