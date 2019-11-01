@@ -278,5 +278,15 @@ export const actions = {
           })
         })
     }
+  },
+  deleteArticle({ commit }, aid) {
+    db.collection('articles')
+      .where('aid', '==', aid)
+      .get()
+      .then(q => {
+        q.forEach(ss =>
+          ss.ref.delete().then(result => commit('spliceArticle', aid))
+        )
+      })
   }
 }

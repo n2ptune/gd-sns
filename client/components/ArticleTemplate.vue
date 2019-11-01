@@ -37,7 +37,7 @@
                     "
                   >
                     <v-list-item-title>
-                      <strong>{{ item.title }}</strong>
+                      {{ item.title }}
                     </v-list-item-title>
                     <v-list-item-icon>
                       <v-icon>{{ item.icon }}</v-icon>
@@ -65,25 +65,16 @@
             </div>
           </v-card-text>
           <v-card-actions>
+						<div class="mr-auto" :style="{ fontSize: '12px' }" v-if="article.likes.people.length !== 0">
+							{{ article.likes.people.length }}명이 좋아합니다.
+						</div>
             <div class="ml-auto">
               <v-btn
-                text
+                icon
                 @click="setLike(article)"
                 :color="likesColorHandler(article.likes.people)"
               >
-                {{
-                likesColorHandler(article.likes.people) === 'primary'
-                ? '좋아요 취소'
-                : '좋아요'
-                }}
-                <v-badge color="amber accent-1">
-                  <template v-slot:badge>
-                    {{
-                    article.likes.people.length
-                    }}
-                  </template>
-                  <v-icon right :color="likesColorHandler(article.likes.people)">mdi-thumb-up</v-icon>
-                </v-badge>
+                <v-icon :color="likesColorHandler(article.likes.people)">mdi-thumb-up</v-icon>
               </v-btn>
               <v-btn icon append>
                 <v-icon>mdi-message-plus</v-icon>
