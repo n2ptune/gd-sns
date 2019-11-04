@@ -19,7 +19,7 @@ export default {
       },
       { property: 'og:type', content: 'website' },
       { property: 'og:title', content: '강동대학교 SNS' },
-      { property: 'og:url', content: 'http://n2ptune.dothome.co.kr/' },
+      { property: 'og:url', content: 'https://sns.n2ptune.xyz/' },
       {
         property: 'og:description',
         content: '강동대학교 학생들을 위한 소셜 네트워크 서비스'
@@ -27,7 +27,7 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
-      { rel: 'canonical', href: 'http://n2ptune.dothome.co.kr/' }
+      { rel: 'canonical', href: 'https://sns.n2ptune.xyz/' }
     ]
   },
   /*
@@ -115,7 +115,7 @@ export default {
   // Custom Below
   srcDir: 'client/',
   generate: {
-    dir: 'dist/'
+    dir: 'public'
   },
   vendor: ['~/plugins/vuexPersistence.js', '~/store.index.js']
 }
