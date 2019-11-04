@@ -5,6 +5,7 @@
       width="750px"
       @click:outside="toggleShowValue(images.key)"
       @keydown.esc="toggleShowValue(images.key)"
+      content-class="not-scroll-bar"
     >
       <template v-slot:activator="{ on }">
         <div

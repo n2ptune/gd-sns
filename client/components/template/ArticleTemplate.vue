@@ -66,6 +66,7 @@
           </v-card-text>
           <v-card-actions>
 						<div class="mr-auto" :style="{ fontSize: '12px' }" v-if="article.likes.people.length !== 0">
+							<v-icon size="small" color="red">mdi-heart</v-icon>
 							{{ article.likes.people.length }}명이 좋아합니다.
 						</div>
             <div class="ml-auto">

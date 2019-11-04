@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar color="success darken-1" dark app>
+  <v-app-bar color="success darken-1" dark app clipped-right>
     <span class="app-bar-header">
       <v-btn to="/" icon>
         <v-icon>mdi-home-account</v-icon>

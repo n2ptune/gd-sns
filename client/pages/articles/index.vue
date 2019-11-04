@@ -136,12 +136,13 @@
 </template>
 
 <script>
-  import ArticleTemplate from '@/components/ArticleTemplate.vue'
+  import ArticleTemplate from '@/components/template/ArticleTemplate.vue'
 
 	export default {
 		components: {
 			ArticleTemplate
 		},
+    layout: 'article',
 		head() {
 			return {
 				title: '게시글 모아보기',
@@ -159,7 +160,7 @@
 		},
 		middleware: 'auth',
 		mounted() {
-			this.$store.dispatch('getArticles', { type: 'all' })
+      this.$store.dispatch('getArticles', { type: 'all' })
 		},
 		methods: {
 			async draw() {

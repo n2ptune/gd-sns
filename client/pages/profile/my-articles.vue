@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import ArticleTemplate from '~/components/ArticleTemplate.vue'
+import ArticleTemplate from '~/components/template/ArticleTemplate.vue'
 
 export default {
   components: {

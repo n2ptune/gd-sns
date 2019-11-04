@@ -36,7 +36,7 @@ npm run start
 
 ## 참조
 
-더 자세한 내용은 [Nuxt.js docs](https://nuxtjs.org/)에서 확인하실 수 있습니다.
+See update log [UPDATELOG](/UPDATELOG.md)
 
 ## Fix
 
