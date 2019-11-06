@@ -115,7 +115,7 @@ export default {
   // Custom Below
   srcDir: 'client/',
   generate: {
-    dir: 'public'
+    dir: 'public/'
   },
   vendor: ['~/plugins/vuexPersistence.js', '~/store.index.js']
 }
