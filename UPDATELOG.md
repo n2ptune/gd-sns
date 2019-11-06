@@ -5,6 +5,7 @@
 - now deploy 관련 스크립트 삭제
 - generate 폴더 dist -> public(now --prod로 배포 가능)
 - 패키지 매니저 변경(npm -> yarn)
+- 모바일에서 가로 스크롤 생기는 오류 해결
 
 ### 2019-11-04#2
 
