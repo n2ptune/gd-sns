@@ -1,10 +1,16 @@
 # UPDATE LOG
 
+### 2019-11-06
+
+- now deploy 관련 스크립트 삭제
+- generate 폴더 dist -> public(now --prod로 배포 가능)
+- 패키지 매니저 변경(npm -> yarn)
+
 ### 2019-11-04#2
 
 @호스팅 변경(dothome -> zeit now service)
 
-- now deploy script 추가(npm run deploy, npm run now)
+- now deploy 스크립트 추가(npm run deploy, npm run now)
 - now deploy dist/ dist 폴더를 기준으로 배포하기
 - xyz 도메인 CNAME 추가(sns) -> https://sns.n2ptune.xyz/
 
