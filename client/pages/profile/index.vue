@@ -1,8 +1,8 @@
 <template>
   <v-content style="background-color: #eee;">
     <v-container class="my-5">
-      <v-layout row wrap justify-center>
-        <v-flex xs11 sm8>
+      <v-row justify="center">
+        <v-col cols="12" sm="8" md="6" lg="4">
           <v-card v-if="$store.state.user">
             <v-card-title>
               <div class="mx-auto headline">{{ $store.state.user.displayName }}님의 프로필</div>
@@ -39,8 +39,8 @@
               </v-list>
             </v-card-text>
           </v-card>
-        </v-flex>
-      </v-layout>
+        </v-col>
+      </v-row>
     </v-container>
   </v-content>
 </template>
