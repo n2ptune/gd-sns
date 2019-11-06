@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :style="{ overflowX: 'hidden' }">
     <default-header />
 		<default-sider v-show="handleSider" />
     <nuxt />
