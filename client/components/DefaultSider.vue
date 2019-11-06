@@ -7,8 +7,8 @@
     floating
     width="185px"
     height="110vh"
-    :mobile-break-point="1000"
-    class="pt-5 pl-3"
+    touchless
+    class="pt-5 pl-3 "
   >
     <friends-avatar
       :friends="friends"

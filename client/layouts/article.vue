@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <default-header />
-		<default-sider />
+		<default-sider v-show="handleSider" />
     <nuxt />
   </v-app>
 </template>
@@ -14,6 +14,11 @@
 		components: {
 			DefaultHeader,
 			DefaultSider
+		},
+		computed: {
+			handleSider() {
+				return this.$vuetify.breakpoint.mdAndUp
+			}
 		}
 	}
 </script>
