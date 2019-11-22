@@ -11,7 +11,12 @@
           dark
         >
           <v-card>
-            <v-app-bar dark tile title="새 게시글 작성하기" class="app-bar-gradient">
+            <v-app-bar
+              dark
+              tile
+              title="새 게시글 작성하기"
+              class="app-bar-gradient"
+            >
               <v-app-bar-nav-icon>
                 <v-icon>mdi-newspaper-variant</v-icon>
               </v-app-bar-nav-icon>
@@ -51,11 +56,18 @@
                         </v-avatar>
                         <div class="author--text">
                           나의 게시글
-                          <div class="caption" style="line-height: 0.5rem !important;">몇 초 전</div>
+                          <div
+                            class="caption"
+                            style="line-height: 0.5rem !important;"
+                          >
+                            몇 초 전
+                          </div>
                         </div>
                         <v-item-group class="ml-auto">
                           <v-btn icon>
-                            <v-icon color="green accent-4">mdi-tooltip-account</v-icon>
+                            <v-icon color="green accent-4"
+                              >mdi-tooltip-account</v-icon
+                            >
                           </v-btn>
                           <v-btn icon>
                             <v-icon>mdi-dots-vertical</v-icon>
@@ -75,7 +87,7 @@
                             <v-icon>mdi-charity</v-icon>
                           </v-btn>
                           <v-btn icon>
-                            <v-icon>mdi-message-plus</v-icon>
+                            <v-icon>mdi-comment</v-icon>
                           </v-btn>
                         </div>
                       </v-card-actions>
@@ -103,7 +115,8 @@
                       block
                       color="pink darken-2"
                       dark
-                    >이대로 작성하기</v-btn>
+                      >이대로 작성하기</v-btn
+                    >
                   </v-col>
                 </v-row>
               </v-container>
@@ -136,92 +149,90 @@
 </template>
 
 <script>
-  import ArticleTemplate from '@/components/template/ArticleTemplate.vue'
+export default {
+  components: {
+    ArticleTemplate: () => import('@/components/template/ArticleTemplate')
+  },
+  layout: 'article',
+  head() {
+    return {
+      title: '게시글 모아보기',
+      meta: [{ name: 'description', content: '게시글 모아보기' }]
+    }
+  },
+  data() {
+    return {
+      dummyPostText: '',
+      postDialog: false,
+      rules: {
+        postRule: v => !!v || '빈 내용을 게시할 수 없습니다.'
+      }
+    }
+  },
+  middleware: ['auth', 'usercheck'],
+  mounted() {
+    this.$store.dispatch('getArticles', { type: 'all' })
+  },
+  methods: {
+    async draw() {
+      if (this.dummyPostText) {
+        const options = {
+          text: this.dummyPostText,
+          files: this.$refs.imageUpload.files
+        }
+        await this.$store.dispatch('draw', options)
+        this.dummyPostText = ''
+        this.postDialog = false
+      }
+    },
+    makeNewLine(context) {
+      return context.replace(/\n/g, '<br/>')
+    },
+    handleImageUpload() {
+      const files = this.$refs.imageUpload.files
+      const preview = document.getElementsByClassName('article--area-dummy')[0]
 
-	export default {
-		components: {
-			ArticleTemplate
-		},
-    layout: 'article',
-		head() {
-			return {
-				title: '게시글 모아보기',
-				meta: [{ name: 'description', content: '게시글 모아보기' }]
-			}
-		},
-		data() {
-			return {
-				dummyPostText: '',
-				postDialog: false,
-				rules: {
-					postRule: v => !!v || '빈 내용을 게시할 수 없습니다.'
-				}
-			}
-		},
-		middleware: 'auth',
-		mounted() {
-      this.$store.dispatch('getArticles', { type: 'all' })
-		},
-		methods: {
-			async draw() {
-				if (this.dummyPostText) {
-					const options = {
-						text: this.dummyPostText,
-						files: this.$refs.imageUpload.files
-					}
-					await this.$store.dispatch('draw', options)
-					this.dummyPostText = ''
-					this.postDialog = false
-				}
-			},
-			makeNewLine(context) {
-				return context.replace(/\n/g, '<br/>')
-			},
-			handleImageUpload() {
-				const files = this.$refs.imageUpload.files
-				const preview = document.getElementsByClassName('article--area-dummy')[0]
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i]
 
-				for (let i = 0; i < files.length; i++) {
-					const file = files[i]
+        const img = document.createElement('img')
+        img.classList.add('img-obj')
+        img.file = file
 
-					const img = document.createElement('img')
-					img.classList.add('img-obj')
-					img.file = file
+        preview.appendChild(img)
 
-					preview.appendChild(img)
-
-					const reader = new FileReader()
-					reader.onload = (function(aImg) {
-						return function(e) {
-							aImg.src = e.target.result
-						}
-					})(img)
-					reader.readAsDataURL(file)
-				}
-			}
-		}
-	}
+        const reader = new FileReader()
+        reader.onload = (function(aImg) {
+          return function(e) {
+            aImg.src = e.target.result
+          }
+        })(img)
+        reader.readAsDataURL(file)
+      }
+    }
+  }
+}
 </script>
 
 <style lang="scss">
-	textarea {
-		line-height: 1.45rem;
-	}
-	.app-bar-gradient {
-		background-image: linear-gradient(
-			65.8deg,
-			rgba(215, 17, 73, 1) 18.5%,
-			rgba(195, 19, 69, 1) 91.8%
-		);
-		border-radius: 0 !important;
-	}
-	.img-obj {
-		display: block;
-    width: 100%;
-	}
-  @media screen and (max-width: 600px) {
-    .main-container {
-      padding: 0;
-    }
+textarea {
+  line-height: 1.45rem;
+}
+.app-bar-gradient {
+  background-image: linear-gradient(
+    65.8deg,
+    rgba(215, 17, 73, 1) 18.5%,
+    rgba(195, 19, 69, 1) 91.8%
+  );
+  border-radius: 0 !important;
+}
+.img-obj {
+  display: block;
+  width: 100%;
+}
+@media screen and (max-width: 600px) {
+  .main-container {
+    padding: 0;
   }
+}
 </style>
