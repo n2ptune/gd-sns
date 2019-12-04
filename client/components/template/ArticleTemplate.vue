@@ -108,8 +108,33 @@
               </v-btn>
             </div>
           </v-card-actions>
-          <v-card-actions v-if="article.comment.isShow">
-            <div>ㅁㄴㅇ</div>
+          <v-card-actions v-if="true">
+            <div :style="{ display: 'flex', flexDirection: 'column' }">
+              <v-avatar size="30" :style="{ display: 'inline-flex' }">
+                <img :src="article.photoURL" />
+              </v-avatar>
+              <div :style="{ marginLeft: '7px', display: 'inline-flex' }">
+                {{ article.name }}
+              </div>
+            </div>
+            <div
+              :style="{
+                display: 'block',
+                padding: '1rem',
+                margin: '1rem',
+                backgroundColor: '#eee',
+                color: 'black',
+                borderRadius: '5px'
+              }"
+            >
+              곳으로 아니더면, 청춘에서만 없는 아니다. 풍부하게 있을 풀이 원질이
+              듣기만 대고, 끓는다. 관현악이며, 봄날의 인생을 부패뿐이다. 든
+              인간은 희망의 것이다.보라, 그들의 열락의 피고, 낙원을 우리 힘있다.
+              되는 인류의 청춘의 않는 그리하였는가? 소리다.이것은 천지는
+              풍부하게 곳이 사랑의 내는 교향악이다. 뜨거운지라, 그들의 봄바람을
+              가슴이 무엇을 사랑의 충분히 부패를 사막이다. 목숨이 이상은 인간의
+              군영과 듣는다.
+            </div>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -204,6 +229,10 @@ export default {
     },
     handleComment(article) {
       this.$store.dispatch('comment/viewComment', article)
+    },
+    rndDummyText() {
+      const rnd = Math.floor(Math.random() * 5)
+      console.log(rnd)
     }
   },
   computed: {
