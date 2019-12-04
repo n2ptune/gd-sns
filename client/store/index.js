@@ -4,8 +4,6 @@ import loadImage from 'blueimp-load-image'
 const db = firebase.firestore()
 const storage = firebase.storage()
 
-export const strict = false
-
 /* vuex actions에서 첫번째 인자로 오는 context에 대해서
  * {
  *   state,      // same as store.state, or local state if in modules
@@ -32,6 +30,8 @@ export const mutations = {
     state.user = {}
     // 모든 정보를 복사하면 maximum call stack size exceeded 오류 발생
     Object.assign(state.user, getUser.providerData[0])
+    // 모든 정보
+    // Object.assign(state.user, getUser)
     $nuxt.$router.push('/articles')
     state.btnLoading = !state.btnLoading
   },
@@ -66,10 +66,6 @@ export const mutations = {
 }
 
 export const actions = {
-  // * nuxtServerInit
-  nuxtServerInit({ commit }) {
-    // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-  },
   login({ commit }) {
     commit('setLoading')
     // @SEE indexedDB https://www.tutorialdocs.com/article/indexeddb-tutorial.html
@@ -87,13 +83,13 @@ export const actions = {
         .transaction(fs)
         .objectStore(fs)
         .openCursor().onsuccess = async event => {
-          if (event.target.result)
-            commit('setUser', event.target.result.value.value)
-          else
-            await firebase
-              .auth()
-              .signInWithRedirect(new firebase.auth.GoogleAuthProvider())
-        }
+        if (event.target.result)
+          commit('setUser', event.target.result.value.value)
+        else
+          await firebase
+            .auth()
+            .signInWithRedirect(new firebase.auth.GoogleAuthProvider())
+      }
     }
   },
   async logout({ commit }) {
@@ -160,11 +156,9 @@ export const actions = {
         const r = await storageRef
           .child(fileName)
           .put(file)
-          .then(async (s) => {
+          .then(async s => {
             // URL 뽑아내기
-            const url = await storageRef
-              .child(fileName)
-              .getDownloadURL()
+            const url = await storageRef.child(fileName).getDownloadURL()
             images.push({
               ref: fileName,
               url
@@ -211,8 +205,12 @@ export const actions = {
                 isShow: false,
                 data: []
               }
-              data.comment = data.hasOwnProperty('comment') ? data.comment : defaultCmtOptions
-              data.likes = data.hasOwnProperty('likes') ? data.likes : { people: [] }
+              data.comment = data.hasOwnProperty('comment')
+                ? data.comment
+                : defaultCmtOptions
+              data.likes = data.hasOwnProperty('likes')
+                ? data.likes
+                : { people: [] }
               if (data.hasOwnProperty('images')) {
                 for (let i = 0; i < data.images.length; i++) {
                   const url = await storage
@@ -220,24 +218,28 @@ export const actions = {
                     .child(data.images[i].ref)
                     .getDownloadURL()
                   data.images[i].url = url
-                  loadImage(url, async (img, __data) => {
-                    if (img.type === 'error') {
-                      console.log('error')
-                    } else {
-                      try {
-                        // 회전 값 저장
-                        const ori = await __data.exif.get('Orientation')
-                        data.images[i].orientation = ori
-                      } catch (e) { }
-                    }
-                  }, { meta: true })
+                  loadImage(
+                    url,
+                    async (img, __data) => {
+                      if (img.type === 'error') {
+                        console.log('error')
+                      } else {
+                        try {
+                          // 회전 값 저장
+                          const ori = await __data.exif.get('Orientation')
+                          data.images[i].orientation = ori
+                        } catch (e) {}
+                      }
+                    },
+                    { meta: true }
+                  )
                 }
               }
               commit('setArticles', data)
             }
           })
         })
-    } else if(type === 'my') {
+    } else if (type === 'my') {
       await db
         .collection('articles')
         .where('uid', '==', state.user.uid)
@@ -251,8 +253,12 @@ export const actions = {
                 isShow: false,
                 data: []
               }
-              data.comment = data.hasOwnProperty('comment') ? data.comment : defaultCmtOptions
-              data.likes = data.hasOwnProperty('likes') ? data.likes : { people: [] }
+              data.comment = data.hasOwnProperty('comment')
+                ? data.comment
+                : defaultCmtOptions
+              data.likes = data.hasOwnProperty('likes')
+                ? data.likes
+                : { people: [] }
               if (data.hasOwnProperty('images')) {
                 for (let i = 0; i < data.images.length; i++) {
                   const url = await storage
@@ -260,17 +266,21 @@ export const actions = {
                     .child(data.images[i].ref)
                     .getDownloadURL()
                   data.images[i].url = url
-                  loadImage(url, async (img, __data) => {
-                    if (img.type === 'error') {
-                      console.log('error')
-                    } else {
-                      try {
-                        // 회전 값 저장
-                        const ori = await __data.exif.get('Orientation')
-                        data.images[i].orientation = ori
-                      } catch (e) { }
-                    }
-                  }, { meta: true })
+                  loadImage(
+                    url,
+                    async (img, __data) => {
+                      if (img.type === 'error') {
+                        console.log('error')
+                      } else {
+                        try {
+                          // 회전 값 저장
+                          const ori = await __data.exif.get('Orientation')
+                          data.images[i].orientation = ori
+                        } catch (e) {}
+                      }
+                    },
+                    { meta: true }
+                  )
                 }
               }
               commit('setArticles', data)

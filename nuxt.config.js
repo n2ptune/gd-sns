@@ -37,10 +37,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: [
-    '@/assets/variables.scss',
-    '@/assets/global.css'
-  ],
+  css: ['@/assets/variables.scss', '@/assets/global.css'],
   /*
    ** Plugins to load before mounting the App
    */
@@ -115,7 +112,8 @@ export default {
   // Custom Below
   srcDir: 'client/',
   generate: {
-    dir: 'public/'
+    dir: 'public/',
+    fallback: true
   },
   vendor: ['~/plugins/vuexPersistence.js', '~/store.index.js']
 }

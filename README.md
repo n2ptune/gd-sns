@@ -1,5 +1,7 @@
 # 강동대학교 소셜 네트워크 서비스 :kissing_smiling_eyes:
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/07c51195-e86a-48fa-91f4-ff33d8ad9c69/deploy-status)](https://app.netlify.com/sites/festive-aryabhata-2d097c/deploys)
+
 ## 데모
 
 강동대학교 소셜 네트워크 서비스는 다음의 링크를 통해 데모 사이트를 확인하실 수 있습니다.
