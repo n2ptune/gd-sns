@@ -5,7 +5,7 @@
       v-for="article in $store.state.articles"
       :key="article.aid"
     >
-      <v-col cols="12" sm="8" md="6" lg="4">
+      <v-col cols="12" sm="8" md="6" lg="6">
         <v-card class="article--container">
           <v-card-title>
             <v-avatar size="28" class="mr-2">
